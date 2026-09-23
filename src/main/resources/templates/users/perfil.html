@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="VetLife, cl&iacute;nica veterinaria y gesti&oacute;n de citas para mascotas." name="description" />
+    <title>
+        Mi perfil | VetLife
+    </title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" rel="stylesheet" />
+<link th:href="@{/assets/css/estilos.css}" rel="stylesheet" />
+</head>
+
+<body>
+    <header>
+        <nav aria-label="Navegaci&oacute;n principal" class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+            <div class="container py-2">
+                <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
+                  <img th:src="@{/assets/img/iconoW.jpeg}" alt="Logo VetLife">
+                    
+                </a>
+                <button aria-controls="menuPrincipal" aria-label="Abrir men&uacute;" class="navbar-toggler"
+                    data-bs-target="#menuPrincipal" data-bs-toggle="collapse" type="button">
+                    <span class="small fw-semibold">Menú</span>
+                </button>
+                <div class="collapse navbar-collapse" id="menuPrincipal">
+                    <ul class="navbar-nav mx-lg-auto mb-3 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" data-pagina-nav="inicio" href="../index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-pagina-nav="servicios" href="servicios.html">Servicios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-pagina-nav="citas" href="citas.html">Reservar
+                                cita</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-pagina-nav="contacto" href="contacto.html">Contacto</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2"
+                        id="zonaUsuario">
+                        <a class="nav-link" href="login.html">Iniciar sesión</a>
+                        <a class="btn btn-primary btn-sm px-3" href="registro.html">Crear cuenta</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="container py-5">
+        <header class="mb-4">
+            <p class="text-uppercase small fw-semibold text-primary mb-2">
+                Cuenta
+            </p>
+            <h1 class="display-6 font-heading">
+                Mi perfil
+            </h1>
+            <p class="text-secondary">
+                Administra tus datos y consulta las mascotas registradas.
+            </p>
+        </header>
+        <div class="row g-4">
+            <section class="col-lg-7">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4 p-lg-5">
+                        <h2 class="h5 font-heading">
+                            Datos personales
+                        </h2>
+                        <form class="row g-3 mt-1" id="formularioPerfil">
+                            <div class="col-md-6">
+                                <label class="form-label" for="perfilNombre">
+                                    Nombre
+                                </label>
+                                <input class="form-control" id="perfilNombre" required="" th:value="${nombreUsuario}" />                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="perfilApellido">
+                                    Apellido
+                                </label>
+                                <input class="form-control" id="perfilApellido" required="" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="perfilDni">
+                                    DNI
+                                </label>
+                                <input class="form-control" id="perfilDni" />
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label" for="perfilTelefono">
+                                    Tel&eacute;fono
+                                </label>
+                                <input class="form-control" id="perfilTelefono" type="tel" />
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label" for="perfilCorreo">
+                                    Correo
+                                </label>
+                                <input class="form-control" id="perfilCorreo" type="email" />
+                            </div>
+                            <div class="col-12">
+                                <button class="btn btn-primary" type="submit">
+                                    Guardar cambios
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+            <aside class="col-lg-5">
+                <div class="card shadow-sm">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h2 class="h5 font-heading mb-0">
+                                Mis mascotas
+                            </h2>
+                            <a class="btn btn-sm btn-outline-primary" href="mascota.html?from=perfil">
+                                A&ntilde;adir
+                            </a>
+                        </div>
+                        <div id="listaMascotasPerfil">
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+    <footer class="border-top py-4 bg-white mt-5">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-lg-5">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="brand-wordmark">
+                            Vet
+                            <b>
+                                Life
+                            </b>
+                        </span>
+                    </div>
+                    <h2 class="h5 font-heading">
+                        Cuidamos de quienes forman parte de tu familia.
+                    </h2>
+                    <p class="small text-secondary mb-0">
+                        Cl&iacute;nica veterinaria especializada con reserva digital y seguimiento de
+                        tus mascotas.
+                    </p>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <h2 class="h6">
+                        Enlaces
+                    </h2>
+                    <ul class="list-unstyled small d-grid gap-2 mb-0">
+                        <li>
+                            <a href="../index.html">
+                                Inicio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="servicios.html">
+                                Servicios
+                            </a>
+                        </li>
+                        <li>
+                            <a href="citas.html">
+                                Reservar cita
+                            </a>
+                        </li>
+                        <li>
+                            <a href="contacto.html">
+                                Contacto
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <h2 class="h6">
+                        Contacto
+                    </h2>
+                    <ul class="list-unstyled small text-secondary d-grid gap-2 mb-0">
+                        <li>
+                            +51 995 151 681
+                        </li>
+                        <li>
+                            Vetlifepiura@gmail.com
+                        </li>
+                        <li>
+                            Lun&ndash;Vie 8:00&ndash;18:00 &middot; S&aacute;b 8:00&ndash;13:00
+                        </li>
+                        <li>
+                            Piura, Urb. Angamos Calle C mz K Lote 15
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="border my-4" />
+            <div class="small text-secondary d-flex flex-column flex-md-row justify-content-center gap-2">
+                <span>
+                    &copy; 2026 VetLife. Original to vetlife website.
+                </span>
+            </div>
+        </div>
+    </footer>
+    <div class="position-fixed end-0 bottom-0 m-3" id="contenedorToast">
+    </div>
+    <script crossorigin="anonymous" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" 
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/assets/js/datos.js}"></script>
+    <script th:src="@{/assets/js/utilidades.js}"></script>
+    <script th:src="@{/assets/js/mascotas.js}"></script>
+    <script th:src="@{/assets/js/app.js}"></script>
+</body>
+
+</html>

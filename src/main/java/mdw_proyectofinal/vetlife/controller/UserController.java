@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class UserController {
 
     @GetMapping("/perfil")
-    public String verPerfil(Model model) {
-        model.addAttribute("nombreUsuario", "Grisel");
-        return "perfil";
-    }
+public String mostrarPerfil(Model model) {
+    model.addAttribute("nombreUsuario", "Grisel");
+    return "users/perfil";
+}
 
     @GetMapping("/mascota")
     public String verMascota(Model model) {
         model.addAttribute("nombreMascota", "Fido");
-        return "mascota";
+        return "users/mascota";
     }
 }
