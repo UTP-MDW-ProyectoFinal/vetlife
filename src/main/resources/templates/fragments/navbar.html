@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
+<header th:fragment="navbar">
+    <nav aria-label="Navegaci&oacute;n principal" class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+        <div class="container py-2">
+            <a class="navbar-brand d-flex align-items-center gap-2" th:href="@{/}" href="/">
+                <img class="img-fluid" style="max-width: 120px;" th:src="@{/assets/img/iconoW.jpeg}" src="/assets/img/iconoW.jpeg" alt="Logo de VetLife" />
+            </a>
+            <button aria-controls="menuPrincipal" aria-label="Abrir men&uacute;" class="navbar-toggler"
+                data-bs-target="#menuPrincipal" data-bs-toggle="collapse" type="button">
+                <span class="small fw-semibold">Menú</span>
+            </button>
+            <div class="collapse navbar-collapse" id="menuPrincipal">
+                <ul class="navbar-nav mx-lg-auto mb-3 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" data-pagina-nav="inicio" th:href="@{/}" href="/">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-pagina-nav="servicios" th:href="@{/servicios}" href="/servicios">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-pagina-nav="citas" th:href="@{/citas}" href="/citas">Reservar cita</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-pagina-nav="contacto" th:href="@{/contacto}" href="/contacto">Contacto</a>
+                    </li>
+                </ul>
+                <div class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2"
+                    id="zonaUsuario">
+                    <a class="nav-link" th:href="@{/login}" href="/login">Iniciar sesión</a>
+                    <a class="btn btn-primary btn-sm px-3" th:href="@{/registro}" href="/registro">Crear cuenta</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+</body>
+</html>
