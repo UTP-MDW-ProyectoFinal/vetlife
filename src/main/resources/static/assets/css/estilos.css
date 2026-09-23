@@ -1,0 +1,176 @@
+:root {
+  --color-principal: #a4368d;
+  --color-principal-oscuro: #7b256b;
+  --color-principal-claro: #f3dceb;
+  --color-acento: #7b256b;
+  --color-fondo: #fcf9fc;
+  --color-texto: #241c24;
+  --color-texto-suave: #6b6470;
+  --color-borde: #e7dce5;
+
+  --bs-primary: var(--color-principal);
+  --bs-primary-rgb: 164, 54, 141;
+  --bs-link-color: var(--color-principal);
+  --bs-link-hover-color: var(--color-principal-oscuro);
+  --bs-body-bg: var(--color-fondo);
+  --bs-body-color: var(--color-texto);
+  --bs-primary-text-emphasis: var(--color-principal-oscuro);
+  --bs-primary-bg-subtle: var(--color-principal-claro);
+  --bs-primary-border-subtle: #d9b1d1;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: var(--color-texto);
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+}
+
+a {
+  color: inherit;
+}
+
+a:hover {
+  color: var(--color-principal);
+}
+
+.font-heading {
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.brand-wordmark {
+  font-size: 1.15rem;
+  letter-spacing: -0.02em;
+}
+
+.brand-wordmark b {
+  color: var(--color-acento);
+}
+
+.hero-imagen {
+  min-height: 25rem;
+  object-fit: cover;
+}
+
+.estadistica {
+  border-top: 1px solid var(--color-borde);
+}
+
+.mapa {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 24rem;
+  border: 0;
+  flex: 1 1 auto;
+}
+
+.admin-layout {
+  min-height: 100vh;
+}
+
+.admin-sidebar {
+  width: 16rem;
+  background-color: #A4368D;
+  color: #fff;
+}
+
+.admin-sidebar .nav-link {
+  color: rgba(255, 255, 255, 0.75);
+  border-radius: 0.65rem;
+}
+
+.admin-sidebar .nav-link:hover,
+.admin-sidebar .nav-link.active {
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.admin-contenido {
+  min-width: 0;
+  flex: 1;
+}
+
+.admin-barra {
+  height: 4rem;
+  background-color: #fff;
+  border-bottom: 1px solid var(--color-borde);
+}
+
+.admin-fondo {
+  background-color: #f6f0f5;
+}
+
+.superposicion-admin {
+  z-index: 1040;
+}
+
+.avatar-admin {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.detalle-panel {
+  position: sticky;
+  top: 5rem;
+}
+
+.ancho-contenido-citas {
+  max-width: 72rem;
+}
+
+.ancho-texto {
+  max-width: 42rem;
+}
+
+.ancho-buscador-citas {
+  max-width: 20rem;
+}
+
+.ancho-buscador-pacientes {
+  max-width: 22rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--color-principal);
+  box-shadow: 0 0 0 0.25rem rgba(164, 54, 141, 0.16);
+}
+
+.form-check-input:checked {
+  background-color: var(--color-principal);
+  border-color: var(--color-principal);
+}
+
+.form-label {
+  font-weight: 600;
+}
+
+#zonaUsuario .dropdown-menu {
+  z-index: 1100;
+  min-width: 15rem;
+}
+
+@media (max-width: 767.98px) {
+  .hero-imagen {
+    min-height: 18rem;
+  }
+
+  .admin-sidebar {
+    position: fixed;
+    z-index: 1045;
+    inset: 0 auto 0 0;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+  }
+
+  .admin-sidebar.mostrar {
+    transform: translateX(0);
+  }
+}

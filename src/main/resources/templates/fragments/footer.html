@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
+<footer th:fragment="footer" class="border-top py-4 bg-white mt-5">
+    <div class="container py-5">
+        <div class="row g-4">
+            <div class="col-lg-5">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="brand-wordmark">
+                        Vet
+                        <b>
+                            Life
+                        </b>
+                    </span>
+                </div>
+                <h2 class="h5 font-heading">
+                    Cuidamos de quienes forman parte de tu familia.
+                </h2>
+                <p class="small text-secondary mb-0">
+                    Cl&iacute;nica veterinaria especializada con reserva digital y seguimiento de
+                    tus mascotas.
+                </p>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <h2 class="h6">
+                    Enlaces
+                </h2>
+                <ul class="list-unstyled small d-grid gap-2 mb-0">
+                    <li>
+                        <a th:href="@{/}" href="/">
+                            Inicio
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/servicios}" href="/servicios">
+                            Servicios
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/citas}" href="/citas">
+                            Reservar cita
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/contacto}" href="/contacto">
+                            Contacto
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+                <h2 class="h6">
+                    Contacto
+                </h2>
+                <ul class="list-unstyled small text-secondary d-grid gap-2 mb-0">
+                    <li>
+                        +51 995 151 681
+                    </li>
+                    <li>
+                        Vetlifepiura@gmail.com
+                    </li>
+                    <li>
+                        Lun&ndash;Vie 8:00&ndash;18:00 &middot; S&aacute;b 8:00&ndash;13:00
+                    </li>
+                    <li>
+                        Piura, Urb. Angamos Calle C mz K Lote 15
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <hr class="border my-4" />
+        <div class="small text-secondary d-flex flex-column flex-md-row justify-content-center gap-2">
+            <span>
+                &copy; 2026 VetLife. Original to vetlife website.
+            </span>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
