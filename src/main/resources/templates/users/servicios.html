@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Ticket de Brayan: head base (title dinamico) -->
+    <th:block th:replace="~{fragments/base :: paginaHead('Servicios')}" />
+    <!-- CSS extra solo de esta pagina -->
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
+    <!-- Fin Ticket de Brayan -->
+</head>
+
+<body>
+    <!-- Ticket de Brayan: header, contenido principal y footer -->
+    <th:block th:replace="~{fragments/headerFooter :: header('servicios')}" />
+
+    <main>
+        <section class="py-5 bg-primary-subtle border-bottom border">
+            <div class="container">
+                <p class="text-uppercase small fw-semibold text-primary mb-2">
+                    Atenci&oacute;n veterinaria
+                </p>
+                <h1 class="display-5 font-heading">
+                    Nuestros servicios
+                </h1>
+                <p class="lead text-secondary mb-0 ancho-texto">
+                    Explora las especialidades disponibles y encuentra la atenci&oacute;n que necesita tu
+                    mascota.
+                </p>
+            </div>
+        </section>
+        <section class="py-5 container">
+            <div id="listaServiciosPublicos">
+                <section class="mb-5" th:each="categoria : ${categorias}">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="badge bg-primary-subtle text-primary" th:text="${categoria.nombre}">
+                            Cirug&iacute;a
+                        </span>
+                        <span class="text-secondary small"
+                            th:text="${#lists.size(categoria.servicios)} + ' servicios'">
+                            3 servicios
+                        </span>
+                    </div>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+                        <article class="col" th:each="servicio : ${categoria.servicios}">
+                            <div class="card shadow-sm h-100">
+                                <div class="card-body p-4">
+                                    <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3"
+                                        style="width:48px;height:48px;">
+                                        <i class="bi fs-4" th:classappend="${servicio.icono}"></i>
+                                    </div>
+                                    <h2 class="h5" th:text="${servicio.nombre}">Laparoscop&iacute;a</h2>
+                                    <p class="small text-secondary mb-3" th:text="${servicio.descripcion}">
+                                        Atenci&oacute;n veterinaria con seguimiento profesional y registro
+                                        digital.
+                                    </p>
+                                    <div class="d-flex justify-content-between small">
+                                        <span th:text="${servicio.duracionFormateada}">1 h</span>
+                                        <strong class="text-primary"
+                                            th:text="'S/ ' + ${servicio.precioFormateado}">S/ 180.00</strong>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <th:block th:replace="~{fragments/headerFooter :: footer}" />
+
+    <th:block th:replace="~{fragments/base :: scripts}" />
+    <!-- Fin Ticket de Brayan -->
+</body>
+
+</html>

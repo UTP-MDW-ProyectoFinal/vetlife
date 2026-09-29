@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <!-- Ticket de Brayan: header con navegacion y zona de usuario -->
+    <header th:fragment="header(paginaActiva)">
+        <nav aria-label="Navegaci&oacute;n principal" class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+            <div class="container py-2">
+                <a class="navbar-brand d-flex align-items-center gap-2" th:href="@{/}" href="/">
+                    <img class="img-fluid" style="max-width: 120px;" th:src="@{/assets/img/iconoW.jpeg}"
+                        src="/assets/img/iconoW.jpeg" alt="Logo de VetLife" />
+                </a>
+                <button aria-controls="menuPrincipal" aria-label="Abrir men&uacute;" class="navbar-toggler"
+                    data-bs-target="#menuPrincipal" data-bs-toggle="collapse" type="button">
+                    <span class="small fw-semibold">Men&uacute;</span>
+                </button>
+                <div class="collapse navbar-collapse" id="menuPrincipal">
+                    <ul class="navbar-nav mx-lg-auto mb-3 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/}" href="/"
+                                th:classappend="${paginaActiva == 'inicio'} ? ' active fw-bold text-primary'"
+                                th:attr="aria-current=${paginaActiva == 'inicio'} ? 'page' : null">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/servicios}" href="/servicios"
+                                th:classappend="${paginaActiva == 'servicios'} ? ' active fw-bold text-primary'"
+                                th:attr="aria-current=${paginaActiva == 'servicios'} ? 'page' : null">Servicios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/citas}" href="/citas"
+                                th:classappend="${paginaActiva == 'citas'} ? ' active fw-bold text-primary'"
+                                th:attr="aria-current=${paginaActiva == 'citas'} ? 'page' : null">Reservar
+                                cita</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" th:href="@{/contacto}" href="/contacto"
+                                th:classappend="${paginaActiva == 'contacto'} ? ' active fw-bold text-primary'"
+                                th:attr="aria-current=${paginaActiva == 'contacto'} ? 'page' : null">Contacto</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2"
+                        id="zonaUsuario">
+                        <th:block th:if="${usuario == null}">
+                            <a class="nav-link" th:href="@{/login}" href="/login">Iniciar sesi&oacute;n</a>
+                            <a class="btn btn-primary btn-sm px-3" th:href="@{/registro}" href="/registro">Crear
+                                cuenta</a>
+                        </th:block>
+                        <div class="dropdown position-relative" th:unless="${usuario == null}">
+                            <button type="button" class="btn btn-light border d-flex align-items-center gap-2"
+                                id="botonMenuUsuario" data-bs-toggle="dropdown" aria-expanded="false"
+                                aria-haspopup="true">
+                                <span
+                                    class="rounded-circle bg-primary-subtle text-primary d-inline-flex align-items-center justify-content-center fw-bold"
+                                    th:text="${#strings.substring(usuario.nombre, 0, 1)}">U</span>
+                                <span th:text="${#strings.substringBefore(usuario.nombre + ' ', ' ')}">Usuario</span>
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow-sm" id="menuUsuario"
+                                aria-labelledby="botonMenuUsuario">
+                                <li>
+                                    <div class="px-3 py-2">
+                                        <div class="fw-semibold" th:text="${usuario.nombre}">Usuario</div>
+                                        <small class="text-secondary" th:text="${usuario.correo}">correo</small>
+                                    </div>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                </li>
+                                <li><a class="dropdown-item" th:href="@{/perfil}" href="/perfil">Mi perfil</a></li>
+                                <li><a class="dropdown-item" th:href="@{/reservas}" href="/reservas">Mis
+                                        reservas</a></li>
+                                <li><a class="dropdown-item" th:href="@{/mascota}" href="/mascota">Registrar
+                                        mascota</a></li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                </li>
+                                <li>
+                                    <form th:action="@{/logout}" method="post">
+                                        <button class="dropdown-item text-danger" type="submit">Cerrar
+                                            sesi&oacute;n</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <!-- Fin Ticket de Brayan -->
+
+    <!-- Ticket de Brayan: footer del sitio -->
+    <footer th:fragment="footer" class="border-top py-4 bg-white mt-5">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-lg-5">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="brand-wordmark">
+                            Vet<b>Life</b>
+                        </span>
+                    </div>
+                    <h2 class="h5 font-heading">
+                        Cuidamos de quienes forman parte de tu familia.
+                    </h2>
+                    <p class="small text-secondary mb-0">
+                        Cl&iacute;nica veterinaria especializada con reserva digital y seguimiento de tus
+                        mascotas.
+                    </p>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <h2 class="h6 font-heading">Enlaces</h2>
+                    <ul class="list-unstyled small d-grid gap-2 mb-0">
+                        <li><a th:href="@{/}" href="/" class="text-decoration-none">Inicio</a></li>
+                        <li><a th:href="@{/servicios}" href="/servicios" class="text-decoration-none">Servicios</a>
+                        </li>
+                        <li><a th:href="@{/citas}" href="/citas" class="text-decoration-none">Reservar cita</a>
+                        </li>
+                        <li><a th:href="@{/contacto}" href="/contacto" class="text-decoration-none">Contacto</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <h2 class="h6 font-heading">Contacto</h2>
+                    <ul class="list-unstyled small text-secondary d-grid gap-2 mb-0">
+                        <li>
+                            +51 995 151 681
+                        </li>
+                        <li>
+                            Vetlifepiura@gmail.com
+                        </li>
+                        <li>
+                            Lun&ndash;Vie 8:00&ndash;18:00 &middot; S&aacute;b 8:00&ndash;13:00
+                        </li>
+                        <li>
+                            Piura, Urb. Angamos Calle C mz K Lote 15
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="border my-4" />
+            <div class="small text-secondary d-flex flex-column flex-md-row justify-content-center gap-2">
+                <span>
+                    &copy; 2026 VetLife. Original to vetlife website.
+                </span>
+            </div>
+        </div>
+    </footer>
+    <!-- Fin Ticket de Brayan -->
+</body>
+</html>
