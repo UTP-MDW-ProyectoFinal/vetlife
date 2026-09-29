@@ -1,5 +1,6 @@
 HELP.md
 target/
+/data/cuentas.json
 src/main/resources/application.properties
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
