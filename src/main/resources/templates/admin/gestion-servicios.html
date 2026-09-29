@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Gestión de servicios del panel administrativo de VetLife">
+    <title>Gestión de servicios | VetLife</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link th:href="@{/assets/css/estilos.css}" rel="stylesheet">
+</head>
+
+<body class="admin-fondo" data-admin-pagina="servicios" data-pagina="admin-servicios" data-requiere="administrador">
+    <div class="d-flex admin-layout">
+        <aside class="admin-sidebar d-flex flex-column flex-shrink-0 p-3" id="barraLateralAdmin">
+            <a class="d-flex align-items-center gap-2 text-white mb-4" th:href="@{/admin/dashboard}">
+                <img class="img-fluid" style="max-width: 120px;" th:src="@{/assets/img/iconoR.jpeg}"
+                    alt="Logo de VetLifeRosa">
+            </a>
+            <nav aria-label="Menú administrativo">
+                <ul class="nav nav-pills flex-column gap-1">
+                    <li><a class="nav-link d-flex align-items-center gap-2 px-3 py-2" data-pagina-nav="admin-dashboard"
+                            th:href="@{/admin/dashboard}">
+                            Dashboard</a></li>
+                    <li><a class="nav-link d-flex align-items-center gap-2 px-3 py-2" data-pagina-nav="admin-citas"
+                            th:href="@{/admin/gestion-citas}">
+                            Citas</a></li>
+                    <li><a class="nav-link d-flex align-items-center gap-2 px-3 py-2" data-pagina-nav="admin-pacientes"
+                            th:href="@{/admin/pacientes}">
+                            Pacientes</a></li>
+                    <li><a class="nav-link d-flex align-items-center gap-2 px-3 py-2 active"
+                            data-pagina-nav="admin-servicios" th:href="@{/admin/gestion-servicios}">
+                            Servicios</a></li>
+                </ul>
+            </nav>
+
+        </aside>
+        <div class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-none superposicion-admin"
+            id="superposicionAdmin"></div>
+
+        <div class="admin-contenido d-flex flex-column">
+            <header class="admin-barra d-flex align-items-center px-3 px-lg-4 sticky-top">
+
+                <button class="btn btn-light border d-md-none" id="botonMenuAdmin" type="button"
+                    aria-label="Abrir menú">
+                    Menú
+                </button>
+
+                <button class="btn btn-light border ms-auto" type="button" aria-label="Sitio Web">
+                    <a class="text-decoration-none" th:href="@{/}">Web</a>
+                </button>
+
+                <div class="d-flex align-items-center gap-2 ms-3">
+                    <span
+                        class="avatar-admin rounded-circle bg-primary-subtle text-primary d-inline-flex align-items-center justify-content-center fw-bold">
+                        DR
+                    </span>
+
+                    <div class="d-none d-sm-block">
+                        <div class="small fw-semibold">Dra. Ramírez</div>
+                        <div class="small text-secondary">Administrador</div>
+                    </div>
+                </div>
+
+            </header>
+
+            <main class="container-fluid p-4 p-lg-5">
+                <header class="mb-4">
+                    <h1 class="display-6">Gestión de servicios</h1>
+                    <p class="text-secondary mb-0">Consulta y controla la disponibilidad de los servicios de la clínica.
+                    </p>
+                </header>
+
+                <section class="card shadow-sm mb-4" aria-labelledby="tituloFiltrosServicios">
+                    <div class="card-body">
+                        <h2 id="tituloFiltrosServicios" class="h5 mb-3">Buscar servicios</h2>
+                        <div class="row g-3 align-items-end">
+                            <div class="col-lg-6">
+                                <label for="buscarServicio" class="form-label">Nombre del servicio</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                    </span>
+                                    <input class="form-control" id="buscarServicio" type="search"
+                                        placeholder="Ej. ecografía o consulta">
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="filtroCategoria" class="form-label">Categoría</label>
+                                <select class="form-select" id="filtroCategoria">
+                                    <option value="todas">Todas</option>
+                                    <option value="Medicina Interna">Medicina Interna</option>
+                                    <option value="Imagen">Imagen</option>
+                                    <option value="Laboratorio">Laboratorio</option>
+                                    <option value="Cardiología">Cardiología</option>
+                                    <option value="Odontología">Odontología</option>
+                                    <option value="Cirugía">Cirugía</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-3">
+                                <label for="filtroEstadoServicio" class="form-label">Estado</label>
+                                <select class="form-select" id="filtroEstadoServicio">
+                                    <option value="todos">Todos</option>
+                                    <option value="activos">Activos</option>
+                                    <option value="inactivos">Inactivos</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section aria-labelledby="tituloResumenServicios" class="mb-4">
+                    <h2 id="tituloResumenServicios" class="visually-hidden">Resumen de servicios</h2>
+                    <div class="row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-3" id="estadisticasServicios"></div>
+                </section>
+
+                <section aria-labelledby="tituloTablaServicios">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 id="tituloTablaServicios" class="h5 mb-0">Catálogo de servicios</h2>
+                        <span id="contadorServicios" class="badge text-bg-secondary">0 servicios</span>
+                    </div>
+                    <div class="table-responsive bg-white border rounded shadow-sm">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th scope="col">Servicio</th>
+                                    <th scope="col">Categoría</th>
+                                    <th scope="col">Duración</th>
+                                    <th scope="col">Precio</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col" class="text-end">Acción</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaServicios"></tbody>
+                        </table>
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <div class="position-fixed end-0 bottom-0 m-3" id="contenedorToast"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script th:src="@{/assets/js/datos.js}"></script>
+    <script th:src="@{/assets/js/utilidades.js}"></script>
+    <script th:src="@{/assets/js/autenticacion.js}"></script>
+    <script th:src="@{/assets/js/administrador.js}"></script>
+    <script th:src="@{/assets/js/app.js}"></script>
+</body>
+
+</html>
