@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Ticket de Brayan: head base (title dinamico) -->
+    <th:block th:replace="~{fragments/base :: paginaHead('Reservar cita')}" />
+    <!-- Fin Ticket de Brayan -->
+</head>
+
+<body>
+    <!-- Ticket de Brayan: header, contenido principal y footer -->
+    <th:block th:replace="~{fragments/headerFooter :: header('citas')}" />
+
+    <main class="container py-5 ancho-contenido-citas">
+        <header class="text-center mb-5">
+            <p class="text-uppercase small fw-semibold text-primary mb-2">
+                Reserva online
+            </p>
+            <h1 class="display-6 font-heading">
+                Agenda la atenci&oacute;n de tu mascota
+            </h1>
+            <p class="text-secondary mb-0">
+                Selecciona servicio, mascota, fecha y un horario disponible.
+            </p>
+        </header>
+
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card shadow-sm border-0 rounded-3">
+                    <div class="card-body p-4 p-lg-5">
+                        <form id="formReservaCita" th:action="@{/citas}" method="post">
+
+                            <div class="mb-4">
+                                <label for="selectServicio" class="form-label font-heading h5">Servicio</label>
+                                <p class="small text-secondary mb-2">Selecciona la atenci&oacute;n que tu mascota
+                                    necesita.</p>
+                                <select class="form-select" id="selectServicio" name="servicioId" required>
+                                    <option value="" selected disabled>Selecciona un servicio</option>
+                                    <option th:each="servicio : ${servicios}" th:value="${servicio.id}"
+                                        th:text="${servicio.nombre + ' - S/ ' + servicio.precioFormateado}">
+                                        Consulta General - S/ 50.00
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="selectMascota" class="form-label font-heading h5">Mascota</label>
+                                <p class="small text-secondary mb-2">Elige una mascota de tu cuenta.</p>
+                                <select class="form-select" id="selectMascota" name="mascotaId" required>
+                                    <option value="" selected disabled>Seleccione su mascota</option>
+                                    <option th:each="mascota : ${mascotas}" th:value="${mascota.id}"
+                                        th:text="${mascota.nombre + ' (' + mascota.especie + ' - ' + mascota.raza + ')'}">
+                                        Doggy (Perrito - Caniche)
+                                    </option>
+                                </select>
+                                <a class="small text-primary d-inline-block mt-2 text-decoration-none"
+                                    th:href="@{/mascota(from='cita')}" href="/mascota?from=cita">
+                                    Registrar otra mascota
+                                </a>
+                            </div>
+
+                            <hr class="my-4" />
+
+                            <h2 class="h5 font-heading mb-3">Fecha y horario</h2>
+                            <div class="row g-3 mb-4">
+                                <div class="col-md-6">
+                                    <label for="citaFecha" class="form-label">Fecha</label>
+                                    <input class="form-control" id="citaFecha" name="fecha" type="date"
+                                        th:min="${fechaHoy}" th:value="${fechaHoy}" required />
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="citaHora" class="form-label">Horario</label>
+                                    <select class="form-select" id="citaHora" name="hora" required>
+                                        <option value="" selected disabled>Selecciona horario</option>
+                                        <option th:each="horario : ${horarios}" th:value="${horario.valor}"
+                                            th:text="${horario.etiqueta}">
+                                            09:00 AM
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="citaNotas" class="form-label">
+                                    Notas adicionales <span class="fw-normal text-secondary">(opcional)</span>
+                                </label>
+                                <textarea class="form-control" id="citaNotas" name="notas"
+                                    placeholder="S&iacute;ntomas, motivo de consulta o informaci&oacute;n relevante..."
+                                    rows="3"></textarea>
+                            </div>
+
+                            <div
+                                class="bg-primary-subtle rounded-3 p-3 mt-4 d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center">
+                                <div>
+                                    <strong class="small d-block text-dark">Resumen</strong>
+                                    <span class="small text-secondary">Completa las opciones para confirmar.</span>
+                                </div>
+                                <button class="btn btn-primary px-4" type="button" data-bs-toggle="modal"
+                                    data-bs-target="#modalConfirmarCita">
+                                    Confirmar cita
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="modal fade" id="modalConfirmarCita" tabindex="-1" aria-labelledby="modalConfirmarLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title font-heading" id="modalConfirmarLabel">Confirmar solicitud de cita</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-secondary">&iquest;Deseas enviar la solicitud de reserva para tu mascota?</p>
+                    <ul class="list-group list-group-flush mb-2 small">
+                        <li class="list-group-item"><strong>Lugar:</strong> VetLife - Piura</li>
+                        <li class="list-group-item"><strong>Atenci&oacute;n:</strong> Consulta m&eacute;dica
+                            veterinaria</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" form="formReservaCita" class="btn btn-primary">S&iacute;, agendar
+                        cita</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <th:block th:replace="~{fragments/headerFooter :: footer}" />
+
+    <th:block th:replace="~{fragments/base :: scripts}" />
+    <script th:src="@{/assets/js/citas-form.js}" src="/assets/js/citas-form.js"></script>
+    <!-- Fin Ticket de Brayan -->
+</body>
+
+</html>
