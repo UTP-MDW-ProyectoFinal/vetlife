@@ -24,92 +24,138 @@
             </p>
         </header>
 
-        <div class="row justify-content-center">
-            <div class="col-lg-8">
-                <div class="card shadow-sm border-0 rounded-3">
-                    <div class="card-body p-4 p-lg-5">
-                        <form id="formReservaCita" th:action="@{/citas}" method="post">
+        <th:block th:if="${usuario != null}">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card shadow-sm border-0 rounded-3">
+                        <div class="card-body p-4 p-lg-5">
+                            <form id="formReservaCita" th:action="@{/citas}" method="post">
 
-                            <div class="mb-4">
-                                <label for="selectServicio" class="form-label font-heading h5">Servicio</label>
-                                <p class="small text-secondary mb-2">Selecciona la atenci&oacute;n que tu mascota
-                                    necesita.</p>
-                                <select class="form-select" id="selectServicio" name="servicioId" required>
-                                    <option value="" selected disabled>Selecciona un servicio</option>
-                                    <option th:each="servicio : ${servicios}" th:value="${servicio.id}"
-                                        th:text="${servicio.nombre + ' - S/ ' + servicio.precioFormateado}">
-                                        Consulta General - S/ 50.00
-                                    </option>
-                                </select>
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="selectMascota" class="form-label font-heading h5">Mascota</label>
-                                <p class="small text-secondary mb-2">Elige una mascota de tu cuenta.</p>
-                                <select class="form-select" id="selectMascota" name="mascotaId" required>
-                                    <option value="" selected disabled>Seleccione su mascota</option>
-                                    <option th:each="mascota : ${mascotas}" th:value="${mascota.id}"
-                                        th:text="${mascota.nombre + ' (' + mascota.especie + ' - ' + mascota.raza + ')'}">
-                                        Doggy (Perrito - Caniche)
-                                    </option>
-                                </select>
-                                <a class="small text-primary d-inline-block mt-2 text-decoration-none"
-                                    th:href="@{/mascota(from='cita')}" href="/mascota?from=cita">
-                                    Registrar otra mascota
-                                </a>
-                            </div>
-
-                            <hr class="my-4" />
-
-                            <h2 class="h5 font-heading mb-3">Fecha y horario</h2>
-                            <div class="row g-3 mb-4">
-                                <div class="col-md-6">
-                                    <label for="citaFecha" class="form-label">Fecha</label>
-                                    <input class="form-control" id="citaFecha" name="fecha" type="date"
-                                        th:min="${fechaHoy}" th:value="${fechaHoy}" required />
-                                </div>
-                                <div class="col-md-6">
-                                    <label for="citaHora" class="form-label">Horario</label>
-                                    <select class="form-select" id="citaHora" name="hora" required>
-                                        <option value="" selected disabled>Selecciona horario</option>
-                                        <option th:each="horario : ${horarios}" th:value="${horario.valor}"
-                                            th:text="${horario.etiqueta}">
-                                            09:00 AM
+                                <div class="mb-4">
+                                    <label for="selectServicio" class="form-label font-heading h5">Servicio</label>
+                                    <p class="small text-secondary mb-2">Selecciona la atenci&oacute;n que tu mascota
+                                        necesita.</p>
+                                    <select class="form-select" id="selectServicio" name="servicioId" required>
+                                        <option value="" selected disabled>Selecciona un servicio</option>
+                                        <option th:each="servicio : ${servicios}" th:value="${servicio.id}"
+                                            th:text="${servicio.nombre + ' - S/ ' + servicio.precioFormateado}">
+                                            Consulta General - S/ 50.00
                                         </option>
                                     </select>
                                 </div>
-                            </div>
 
-                            <div class="mb-4">
-                                <label for="citaNotas" class="form-label">
-                                    Notas adicionales <span class="fw-normal text-secondary">(opcional)</span>
-                                </label>
-                                <textarea class="form-control" id="citaNotas" name="notas"
-                                    placeholder="S&iacute;ntomas, motivo de consulta o informaci&oacute;n relevante..."
-                                    rows="3"></textarea>
-                            </div>
-
-                            <div
-                                class="bg-primary-subtle rounded-3 p-3 mt-4 d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center">
-                                <div>
-                                    <strong class="small d-block text-dark">Resumen</strong>
-                                    <span class="small text-secondary">Completa las opciones para confirmar.</span>
+                                <div class="mb-4">
+                                    <label for="selectMascota" class="form-label font-heading h5">Mascota</label>
+                                    <p class="small text-secondary mb-2">Elige una mascota de tu cuenta.</p>
+                                    <select class="form-select" id="selectMascota" name="mascotaId" required>
+                                        <option value="" selected disabled>Seleccione su mascota</option>
+                                        <option th:each="mascota : ${mascotas}" th:value="${mascota.id}"
+                                            th:text="${mascota.nombre + ' (' + mascota.especie + ' - ' + mascota.raza + ')'}">
+                                            Doggy (Perrito - Caniche)
+                                        </option>
+                                    </select>
+                                    <a class="small text-primary d-inline-block mt-2 text-decoration-none"
+                                        th:href="@{/mascota(from='cita')}" href="/mascota?from=cita">
+                                        Registrar otra mascota
+                                    </a>
                                 </div>
-                                <button class="btn btn-primary px-4" type="button" data-bs-toggle="modal"
-                                    data-bs-target="#modalConfirmarCita">
-                                    Confirmar cita
-                                </button>
-                            </div>
+
+                                <hr class="my-4" />
+
+                                <h2 class="h5 font-heading mb-3">Fecha y horario</h2>
+                                <div class="row g-3 mb-4">
+                                    <div class="col-md-6">
+                                        <label for="citaFecha" class="form-label">Fecha</label>
+                                        <input class="form-control" id="citaFecha" name="fecha" type="date"
+                                            th:min="${fechaHoy}" th:value="${fechaHoy}" required />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="citaHora" class="form-label">Horario</label>
+                                        <select class="form-select" id="citaHora" name="hora" required>
+                                            <option value="" selected disabled>Selecciona horario</option>
+                                            <option th:each="horario : ${horarios}" th:value="${horario.valor}"
+                                                th:text="${horario.etiqueta}">
+                                                09:00 AM
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <label for="citaNotas" class="form-label">
+                                        Notas adicionales <span class="fw-normal text-secondary">(opcional)</span>
+                                    </label>
+                                    <textarea class="form-control" id="citaNotas" name="notas"
+                                        placeholder="S&iacute;ntomas, motivo de consulta o informaci&oacute;n relevante..."
+                                        rows="3"></textarea>
+                                </div>
+
+                                <div
+                                    class="bg-primary-subtle rounded-3 p-3 mt-4 d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center">
+                                    <div>
+                                        <strong class="small d-block text-dark">Resumen</strong>
+                                        <span class="small text-secondary">Completa las opciones para confirmar.</span>
+                                    </div>
+                                    <button class="btn btn-primary px-4" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#modalConfirmarCita">
+                                        Confirmar cita
+                                    </button>
+                                </div>
 
                         </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </th:block>
+
+        <th:block th:else>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="card shadow-sm border-0 rounded-3">
+                        <div class="card-body p-4 p-lg-5">
+                            <div class="alert alert-warning d-flex gap-3 align-items-start" role="alert"
+                                th:if="${mensajeError}">
+                                <span th:text="${mensajeError}">Las credenciales no son correctas.</span>
+                            </div>
+
+                            <span class="badge text-bg-primary mb-3">Acceso requerido</span>
+                            <h2 class="h4 font-heading mb-2">Inicia sesi&oacute;n para reservar tu cita</h2>
+                            <p class="text-secondary mb-4">
+                                El formulario solo se muestra si ya tienes una cuenta en VetLife. Puedes usar la
+                                cuenta demo o registrarte para agendar la atenci&oacute;n de tu mascota.
+                            </p>
+
+                            <form method="post" th:action="@{/citas/acceder}" class="row g-3 align-items-end">
+                                <div class="col-md-5">
+                                    <label class="form-label" for="usuarioDemo">Usuario</label>
+                                    <input class="form-control" id="usuarioDemo" name="usuario"
+                                        placeholder="demo@vetlife.com" required type="text" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label" for="contrasenaDemo">Contrase&ntilde;a</label>
+                                    <input class="form-control" id="contrasenaDemo" name="contrasena"
+                                        placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required
+                                        type="password" />
+                                </div>
+                                <div class="col-md-3 d-grid">
+                                    <button class="btn btn-primary" type="submit">Iniciar sesi&oacute;n</button>
+                                </div>
+                            </form>
+
+                            <p class="small text-secondary mt-4 mb-0">
+                                &iquest;No tienes cuenta?
+                                <a class="fw-semibold" th:href="@{/registro}">Crear cuenta</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
     </main>
 
     <div class="modal fade" id="modalConfirmarCita" tabindex="-1" aria-labelledby="modalConfirmarLabel"
-        aria-hidden="true">
+        aria-hidden="true" th:if="${usuario != null}">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
