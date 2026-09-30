@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Gestión de pacientes del panel administrativo de VetLife">
+    <title>Pacientes | VetLife</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link th:href="@{/assets/css/estilos.css}" rel="stylesheet">
+</head>
+
+<body class="admin-fondo" data-admin-pagina="pacientes" data-pagina="admin-pacientes" data-requiere="administrador">
+    <div class="d-flex admin-layout">
+        <aside class="admin-sidebar d-flex flex-column flex-shrink-0 p-3" id="barraLateralAdmin">
+            <a class="d-flex align-items-center gap-2 text-white mb-4" th:href="@{/admin/dashboard}">
+                <img class="img-fluid" style="max-width: 120px;" th:src="@{/assets/img/iconoR.jpeg}"
+                    alt="Logo de VetLifeRosa">
+            </a>
+            <nav aria-label="Menú administrativo">
+                <ul class="nav nav-pills flex-column gap-1">
+                    <li><a class="nav-link d-flex align-items-center gap-2 px-3 py-2" data-pagina-nav="admin-dashboard"
+                            th:href="@{/admin/dashboard}">
+                            Dashboard</a></li>
+                    <li><a class="nav-link d-flex align-items-center gap-2 px-3 py-2" data-pagina-nav="admin-citas"
+                            th:href="@{/admin/gestion-citas}">
+                            Citas</a></li>
+                    <li><a class="nav-link d-flex align-items-center gap-2 px-3 py-2 active"
+                            data-pagina-nav="admin-pacientes" th:href="@{/admin/pacientes}">
+                            Pacientes</a></li>
+                    <li><a class="nav-link d-flex align-items-center gap-2 px-3 py-2" data-pagina-nav="admin-servicios"
+                            th:href="@{/admin/gestion-servicios}">
+                            Servicios</a></li>
+                </ul>
+            </nav>
+
+        </aside>
+        <div class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-none superposicion-admin"
+            id="superposicionAdmin"></div>
+
+        <div class="admin-contenido d-flex flex-column">
+            <header class="admin-barra d-flex align-items-center px-3 px-lg-4 sticky-top">
+
+                <button class="btn btn-light border d-md-none" id="botonMenuAdmin" type="button"
+                    aria-label="Abrir menú">
+                    Menú
+                </button>
+
+                <button class="btn btn-light border ms-auto" type="button" aria-label="Sitio Web">
+                    <a class="text-decoration-none" th:href="@{/}">Web</a>
+                </button>
+
+                <div class="d-flex align-items-center gap-2 ms-3">
+                    <span
+                        class="avatar-admin rounded-circle bg-primary-subtle text-primary d-inline-flex align-items-center justify-content-center fw-bold">
+                        DR
+                    </span>
+
+                    <div class="d-none d-sm-block">
+                        <div class="small fw-semibold">Dra. Ramírez</div>
+                        <div class="small text-secondary">Administrador</div>
+                    </div>
+                </div>
+
+            </header>
+
+            <main class="container-fluid p-4 p-lg-5">
+                <header class="mb-4">
+                    <h1 class="display-6">Pacientes</h1>
+                    <p class="text-secondary mb-0">Consulta rápidamente la información de las mascotas atendidas.</p>
+                </header>
+
+                <section class="card shadow-sm mb-4" aria-labelledby="tituloFiltrosPacientes">
+                    <div class="card-body">
+                        <h2 id="tituloFiltrosPacientes" class="h5 mb-3">Buscar pacientes</h2>
+                        <div class="row g-3 align-items-end">
+                            <div class="col-lg-7">
+                                <label for="buscarPaciente" class="form-label">Paciente, propietario o raza</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                    </span>
+                                    <input class="form-control" id="buscarPaciente" type="search"
+                                        placeholder="Ej. Luna, María o Labrador">
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <label for="filtroEspecie" class="form-label">Especie</label>
+                                <select class="form-select" id="filtroEspecie">
+                                    <option value="todas">Todas las especies</option>
+                                    <option value="Perro">Perro</option>
+                                    <option value="Gato">Gato</option>
+                                    <option value="Ave">Ave</option>
+                                    <option value="Conejo">Conejo</option>
+                                    <option value="Reptil">Reptil</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section aria-labelledby="tituloListaPacientes">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 id="tituloListaPacientes" class="h5 mb-0">Pacientes registrados</h2>
+                        <span id="contadorPacientes" class="badge text-bg-secondary">0 pacientes</span>
+                    </div>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4" id="gridPacientes"></div>
+                </section>
+            </main>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modalPaciente" tabindex="-1" aria-labelledby="tituloModalPaciente" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title fs-5" id="tituloModalPaciente">Ficha del paciente</h2>
+                </div>
+                <div class="modal-body" id="detallePaciente"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="position-fixed end-0 bottom-0 m-3" id="contenedorToast"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+    <script th:src="@{/assets/js/datos.js}"></script>
+    <script th:src="@{/assets/js/utilidades.js}"></script>
+    <script th:src="@{/assets/js/autenticacion.js}"></script>
+    <script th:src="@{/assets/js/administrador.js}"></script>
+    <script th:src="@{/assets/js/app.js}"></script>
+</body>
+
+</html>
