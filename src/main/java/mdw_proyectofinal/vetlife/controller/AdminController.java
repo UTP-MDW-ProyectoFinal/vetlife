@@ -7,6 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller 
 
 public class AdminController {
+
+    @GetMapping("/admin/pacientes")
+    public String pacientes() {
+        return "admin/pacientes";
+    }
+
+    @GetMapping("/admin/dashboard")
+    public String dashboard() {
+        return "admin/dashboard";
+    }
     
 
 // Issue #18
