@@ -1,52 +1,40 @@
 package mdw_proyectofinal.vetlife.service;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import jakarta.servlet.http.HttpSession;
 import mdw_proyectofinal.vetlife.model.Usuario;
 
-// Ticket de Brayan: sesion en memoria con login simple de la cuenta demo
+// Ticket de Brayan: sesion en memoria que reutiliza el login ya existente
 @Service
 public class SesionService {
 
     public static final String ATRIBUTO_USUARIO = "usuario";
 
-    private final String usuarioDemo;
-    private final String contrasenaDemo;
-    private final String nombreDemo;
-    private final String correoDemo;
-
-    public SesionService(
-            @Value("${vetlife.demo.usuario:demo@vetlife.com}") String usuarioDemo,
-            @Value("${vetlife.demo.contrasena:vetlife123}") String contrasenaDemo,
-            @Value("${vetlife.demo.nombre:Grisel Torres}") String nombreDemo,
-            @Value("${vetlife.demo.correo:grisel@vetlife.com}") String correoDemo) {
-        this.usuarioDemo = usuarioDemo;
-        this.contrasenaDemo = contrasenaDemo;
-        this.nombreDemo = nombreDemo;
-        this.correoDemo = correoDemo;
-    }
-
     public Usuario obtener(HttpSession sesion) {
         Object usuario = sesion.getAttribute(ATRIBUTO_USUARIO);
-        return usuario instanceof Usuario usuarioSesion ? usuarioSesion : null;
-    }
-
-    public boolean estaLogueado(HttpSession sesion) {
-        return obtener(sesion) != null;
-    }
-
-    public boolean autenticar(String usuario, String contrasena, HttpSession sesion) {
-        if (!usuarioDemo.equalsIgnoreCase(usuario.trim()) || !contrasenaDemo.equals(contrasena)) {
-            return false;
+        if (usuario instanceof Usuario usuarioSesion) {
+            return usuarioSesion;
         }
-        sesion.setAttribute(ATRIBUTO_USUARIO, new Usuario("U-DEMO", nombreDemo, correoDemo));
-        return true;
+        return recuperarUsuarioDeSesion(sesion);
     }
 
     public void cerrar(HttpSession sesion) {
         sesion.invalidate();
+    }
+
+    // El login ya existente guarda nombre y correo en la sesion, se aprovechan para armar el usuario
+    private Usuario recuperarUsuarioDeSesion(HttpSession sesion) {
+        Object nombre = sesion.getAttribute("nombre");
+        if (nombre == null || nombre.toString().isBlank()) {
+            return null;
+        }
+
+        Object correo = sesion.getAttribute("correo");
+        Usuario usuario = new Usuario("U-SESION", nombre.toString(),
+                correo == null ? null : correo.toString());
+        sesion.setAttribute(ATRIBUTO_USUARIO, usuario);
+        return usuario;
     }
 }
 // Fin Ticket de Brayan

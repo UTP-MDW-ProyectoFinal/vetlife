@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
 import mdw_proyectofinal.vetlife.model.Cita;
@@ -65,15 +64,6 @@ public class UserController {
         model.addAttribute("fechaHoy", LocalDate.now().toString());
         model.addAttribute("horarios", catalogoService.generarHorarios());
         return "users/citas";
-    }
-
-    @PostMapping("/citas/acceder")
-    public String accederACitas(@RequestParam String usuario, @RequestParam String contrasena,
-            HttpSession sesion, RedirectAttributes redireccion) {
-        if (!sesionService.autenticar(usuario, contrasena, sesion)) {
-            redireccion.addFlashAttribute("mensajeError", "Las credenciales de la demo no son correctas.");
-        }
-        return "redirect:/citas";
     }
 
     @PostMapping("/citas")

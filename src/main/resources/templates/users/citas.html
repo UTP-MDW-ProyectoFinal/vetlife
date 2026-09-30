@@ -113,40 +113,22 @@
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="card shadow-sm border-0 rounded-3">
-                        <div class="card-body p-4 p-lg-5">
-                            <div class="alert alert-warning d-flex gap-3 align-items-start" role="alert"
-                                th:if="${mensajeError}">
-                                <span th:text="${mensajeError}">Las credenciales no son correctas.</span>
-                            </div>
-
+                        <div class="card-body p-4 p-lg-5 text-center">
                             <span class="badge text-bg-primary mb-3">Acceso requerido</span>
                             <h2 class="h4 font-heading mb-2">Inicia sesi&oacute;n para reservar tu cita</h2>
                             <p class="text-secondary mb-4">
-                                El formulario solo se muestra si ya tienes una cuenta en VetLife. Puedes usar la
-                                cuenta demo o registrarte para agendar la atenci&oacute;n de tu mascota.
+                                El formulario solo se muestra si ya tienes una cuenta en VetLife. Puedes
+                                registrarte para agendar la atenci&oacute;n de tu mascota.
                             </p>
 
-                            <form method="post" th:action="@{/citas/acceder}" class="row g-3 align-items-end">
-                                <div class="col-md-5">
-                                    <label class="form-label" for="usuarioDemo">Usuario</label>
-                                    <input class="form-control" id="usuarioDemo" name="usuario"
-                                        placeholder="demo@vetlife.com" required type="text" />
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="form-label" for="contrasenaDemo">Contrase&ntilde;a</label>
-                                    <input class="form-control" id="contrasenaDemo" name="contrasena"
-                                        placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" required
-                                        type="password" />
-                                </div>
-                                <div class="col-md-3 d-grid">
-                                    <button class="btn btn-primary" type="submit">Iniciar sesi&oacute;n</button>
-                                </div>
-                            </form>
-
-                            <p class="small text-secondary mt-4 mb-0">
-                                &iquest;No tienes cuenta?
-                                <a class="fw-semibold" th:href="@{/registro}">Crear cuenta</a>
-                            </p>
+                            <div class="d-flex flex-column flex-sm-row justify-content-center gap-2">
+                                <a class="btn btn-primary px-4" th:href="@{/login(redirect='/citas')}">
+                                    Iniciar sesi&oacute;n
+                                </a>
+                                <a class="btn btn-outline-primary px-4" th:href="@{/registro}">
+                                    Crear cuenta
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>

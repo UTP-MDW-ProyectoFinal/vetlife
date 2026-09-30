@@ -1,8 +1,1 @@
 spring.application.name=vetlife
-
-# Ticket de Brayan: cuenta demo en memoria para el login de la vista de citas
-vetlife.demo.usuario=demo@vetlife.com
-vetlife.demo.contrasena=vetlife123
-vetlife.demo.nombre=Grisel Torres
-vetlife.demo.correo=grisel@vetlife.com
-# Fin Ticket de Brayan
