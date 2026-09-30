@@ -1,13 +1,6 @@
 package mdw_proyectofinal.vetlife.controller;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +16,7 @@ import mdw_proyectofinal.vetlife.model.Usuario;
 import mdw_proyectofinal.vetlife.repository.CitaRepository;
 import mdw_proyectofinal.vetlife.repository.MascotaRepository;
 import mdw_proyectofinal.vetlife.repository.ServicioRepository;
+import mdw_proyectofinal.vetlife.service.CatalogoService;
 import mdw_proyectofinal.vetlife.service.SesionService;
 
 @Controller
@@ -32,13 +26,15 @@ public class UserController {
     private final MascotaRepository mascotaRepository;
     private final CitaRepository citaRepository;
     private final SesionService sesionService;
+    private final CatalogoService catalogoService;
 
     public UserController(ServicioRepository servicioRepository, MascotaRepository mascotaRepository,
-            CitaRepository citaRepository, SesionService sesionService) {
+            CitaRepository citaRepository, SesionService sesionService, CatalogoService catalogoService) {
         this.servicioRepository = servicioRepository;
         this.mascotaRepository = mascotaRepository;
         this.citaRepository = citaRepository;
         this.sesionService = sesionService;
+        this.catalogoService = catalogoService;
     }
 
     @GetMapping("/reservas")
@@ -62,11 +58,11 @@ public class UserController {
 
     @GetMapping("/citas")
     public String citas(Model model, HttpSession sesion) {
-        model.addAttribute("usuario", sesionService.obtenerOCrear(sesion));
+        model.addAttribute("usuario", sesionService.obtener(sesion));
         model.addAttribute("servicios", servicioRepository.findAllActivos());
         model.addAttribute("mascotas", mascotaRepository.findAll());
         model.addAttribute("fechaHoy", LocalDate.now().toString());
-        model.addAttribute("horarios", generarHorarios());
+        model.addAttribute("horarios", catalogoService.generarHorarios());
         return "users/citas";
     }
 
@@ -74,7 +70,7 @@ public class UserController {
     public String reservarCita(@RequestParam String servicioId, @RequestParam String mascotaId,
             @RequestParam String fecha, @RequestParam String hora,
             @RequestParam(required = false) String notas, HttpSession sesion) {
-        Usuario usuario = sesionService.obtenerOCrear(sesion);
+        Usuario usuario = sesionService.obtener(sesion);
 
         Servicio servicio = servicioRepository.findById(servicioId).orElse(null);
         Mascota mascota = mascotaRepository.findById(mascotaId).orElse(null);
@@ -95,8 +91,8 @@ public class UserController {
 
     @GetMapping("/servicios")
     public String servicios(Model model, HttpSession sesion) {
-        model.addAttribute("usuario", sesionService.obtenerOCrear(sesion));
-        model.addAttribute("categorias", agruparPorCategoria(servicioRepository.findAllActivos()));
+        model.addAttribute("usuario", sesionService.obtener(sesion));
+        model.addAttribute("categorias", catalogoService.agruparPorCategoria(servicioRepository.findAllActivos()));
         return "users/servicios";
     }
 
@@ -104,36 +100,6 @@ public class UserController {
     public String cerrarSesion(HttpSession sesion) {
         sesionService.cerrar(sesion);
         return "redirect:/";
-    }
-
-    private List<HorarioDisponible> generarHorarios() {
-        List<HorarioDisponible> horarios = new ArrayList<>();
-        LocalTime inicio = LocalTime.of(8, 0);
-        LocalTime fin = LocalTime.of(17, 30);
-        DateTimeFormatter formatoValor = DateTimeFormatter.ofPattern("HH:mm", Locale.ROOT);
-        DateTimeFormatter formatoEtiqueta = DateTimeFormatter.ofPattern("hh:mm a", Locale.ROOT);
-
-        for (LocalTime hora = inicio; !hora.isAfter(fin); hora = hora.plusMinutes(30)) {
-            horarios.add(new HorarioDisponible(hora.format(formatoValor), hora.format(formatoEtiqueta)));
-        }
-        return horarios;
-    }
-
-    private List<CategoriaServicio> agruparPorCategoria(List<Servicio> servicios) {
-        Map<String, List<Servicio>> porCategoria = new LinkedHashMap<>();
-        for (Servicio servicio : servicios) {
-            porCategoria.computeIfAbsent(servicio.getCategoria(), clave -> new ArrayList<>()).add(servicio);
-        }
-
-        List<CategoriaServicio> categorias = new ArrayList<>();
-        porCategoria.forEach((nombre, lista) -> categorias.add(new CategoriaServicio(nombre, lista)));
-        return categorias;
-    }
-
-    public record HorarioDisponible(String valor, String etiqueta) {
-    }
-
-    public record CategoriaServicio(String nombre, List<Servicio> servicios) {
     }
 
     // Fin Controladores Citas / Servicios (Ticket de Brayan)
