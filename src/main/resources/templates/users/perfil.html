@@ -16,79 +16,98 @@
                     Administra tus datos y consulta las mascotas registradas.
                 </p>
             </header>
-            <div class="row g-4">
-                <section class="col-lg-7">
-                    <div class="card shadow-sm">
-                        <div class="card-body p-4 p-lg-5">
-                            <h2 class="h5 font-heading">
-                                Datos personales
-                            </h2>
-                            <form class="row g-3 mt-1" id="formularioPerfil">
-                                <div class="col-md-6">
-                                    <label class="form-label" for="perfilNombre">
-                                        Nombre
-                                    </label>
-                                    <input class="form-control" id="perfilNombre" required="" value="Mar&iacute;a" />
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label" for="perfilApellido">
-                                        Apellido
-                                    </label>
-                                    <input class="form-control" id="perfilApellido" required="" value="Gonz&aacute;lez" />
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label" for="perfilDni">
-                                        DNI
-                                    </label>
-                                    <input class="form-control" id="perfilDni" value="12345678" />
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label" for="perfilTelefono">
-                                        Tel&eacute;fono
-                                    </label>
-                                    <input class="form-control" id="perfilTelefono" type="tel" value="+51 900 111 223" />
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label" for="perfilCorreo">
-                                        Correo
-                                    </label>
-                                    <input class="form-control" id="perfilCorreo" type="email" value="maria.gonzalez@vetlife.com" />
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary" type="submit">
-                                        Guardar cambios
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </section>
-                <aside class="col-lg-5">
-                    <div class="card shadow-sm">
-                        <div class="card-body p-4">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h2 class="h5 font-heading mb-0">
-                                    Mis mascotas
+                <div class="alert alert-success" role="alert" th:if="${mensaje}">
+                    <i class="bi bi-check-circle me-1"></i>
+                    <span th:text="${mensaje}">Mensaje</span>
+                </div>
+                <div class="row g-4">
+                    <section class="col-lg-7">
+                        <div class="card shadow-sm">
+                            <div class="card-body p-4 p-lg-5">
+                                <h2 class="h5 font-heading">
+                                    Datos personales
                                 </h2>
-                                <a class="btn btn-sm btn-outline-primary" href="/mascota?from=perfil"
-                                    th:href="@{/mascota(from='perfil')}">
-                                    A&ntilde;adir
-                                </a>
+                                <form class="row g-3 mt-1" id="formularioPerfil" th:action="@{/perfil}"
+                                    method="post">
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="perfilNombre">
+                                            Nombre
+                                        </label>
+                                        <input class="form-control" id="perfilNombre" name="nombre" required=""
+                                            th:value="${usuario != null ? usuario.nombre : ''}" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="perfilApellido">
+                                            Apellido
+                                        </label>
+                                        <input class="form-control" id="perfilApellido" name="apellido" required=""
+                                            th:value="${usuario != null ? usuario.apellido : ''}" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="perfilDni">
+                                            DNI
+                                        </label>
+                                        <input class="form-control" id="perfilDni" name="dni"
+                                            th:value="${usuario != null ? usuario.dni : ''}" />
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label class="form-label" for="perfilTelefono">
+                                            Tel&eacute;fono
+                                        </label>
+                                        <input class="form-control" id="perfilTelefono" name="telefono" type="tel"
+                                            th:value="${usuario != null ? usuario.telefono : ''}" />
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label" for="perfilCorreo">
+                                            Correo
+                                        </label>
+                                        <input class="form-control" id="perfilCorreo" name="correo" type="email"
+                                            th:value="${usuario != null ? usuario.correo : ''}" />
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary" type="submit">
+                                            Guardar cambios
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
-                            <div id="listaMascotasPerfil">
-                                <div class="card mb-2">
-                                    <div class="card-body d-flex align-items-center gap-3">
-                                        <div>
-                                            <div class="fw-semibold">Luna</div>
-                                            <small class="text-secondary">Perro &middot; Border Collie</small>
+                        </div>
+                    </section>
+                    <aside class="col-lg-5">
+                        <div class="card shadow-sm">
+                            <div class="card-body p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <h2 class="h5 font-heading mb-0">
+                                        Mis mascotas
+                                    </h2>
+                                    <a class="btn btn-sm btn-outline-primary" href="/mascota?from=perfil"
+                                        th:href="@{/mascota(from='perfil')}">
+                                        A&ntilde;adir
+                                    </a>
+                                </div>
+                                <div id="listaMascotasPerfil">
+                                    <div class="card mb-2" th:each="mascota : ${mascotas}">
+                                        <div class="card-body d-flex align-items-center gap-3">
+                                            <div>
+                                                <div class="fw-semibold" th:text="${mascota.nombre}">Luna</div>
+                                                <small class="text-secondary">
+                                                    <span th:text="${mascota.especie}">Perro</span>
+                                                    <span th:if="${!#strings.isEmpty(mascota.raza)}">
+                                                        &middot;
+                                                        <span th:text="${mascota.raza}">Border Collie</span>
+                                                    </span>
+                                                </small>
+                                            </div>
                                         </div>
                                     </div>
+                                    <p class="text-secondary small mb-0" th:if="${#lists.isEmpty(mascotas)}">
+                                        A&uacute;n no tienes mascotas registradas.
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </aside>
-            </div>
+                    </aside>
+                </div>
         </main>
     </th:block>
 

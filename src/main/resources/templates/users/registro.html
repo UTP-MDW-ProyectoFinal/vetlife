@@ -35,52 +35,63 @@
                                     <h2 class="h3 font-heading">
                                         Datos del propietario
                                     </h2>
-                                    <form class="row g-3 mt-2" id="formularioRegistro">
+                                    <form class="row g-3 mt-2" id="formularioRegistro" th:action="@{/registro}"
+                                        method="post">
+                                        <div class="col-12">
+                                            <div class="alert alert-danger mb-0" role="alert" th:if="${error}">
+                                                <i class="bi bi-exclamation-triangle me-1"></i>
+                                                <span th:text="${error}">Error</span>
+                                            </div>
+                                        </div>
                                         <div class="col-md-6">
                                             <label class="form-label" for="registroNombre">
                                                 Nombre
                                             </label>
-                                            <input class="form-control" id="registroNombre" required="" />
+                                            <input class="form-control" id="registroNombre" name="nombre" required=""
+                                                th:value="${nombre}" />
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label" for="registroApellido">
                                                 Apellido
                                             </label>
-                                            <input class="form-control" id="registroApellido" required="" />
+                                            <input class="form-control" id="registroApellido" name="apellido"
+                                                required="" th:value="${apellido}" />
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label" for="registroDni">
                                                 DNI
                                             </label>
-                                            <input class="form-control" id="registroDni" inputmode="numeric" required="" />
+                                            <input class="form-control" id="registroDni" name="dni"
+                                                inputmode="numeric" required="" th:value="${dni}" />
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label" for="registroTelefono">
                                                 Tel&eacute;fono
                                             </label>
-                                            <input class="form-control" id="registroTelefono" required="" type="tel" />
+                                            <input class="form-control" id="registroTelefono" name="telefono"
+                                                required="" type="tel" th:value="${telefono}" />
                                         </div>
                                         <div class="col-12">
                                             <label class="form-label" for="registroCorreo">
                                                 Correo electr&oacute;nico
                                             </label>
-                                            <input autocomplete="email" class="form-control" id="registroCorreo" required=""
-                                                type="email" />
+                                            <input autocomplete="email" class="form-control" id="registroCorreo"
+                                                name="correo" required="" type="email" th:value="${correo}" />
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label" for="registroContrasena">
                                                 Contrase&ntilde;a
                                             </label>
                                             <input autocomplete="new-password" class="form-control" id="registroContrasena"
-                                                minlength="6" required="" type="password" />
+                                                name="contrasena" minlength="6" required="" type="password" />
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label" for="registroConfirmarContrasena">
                                                 Confirmar contrase&ntilde;a
                                             </label>
                                             <input autocomplete="new-password" class="form-control"
-                                                id="registroConfirmarContrasena" minlength="6" required=""
-                                                type="password" />
+                                                id="registroConfirmarContrasena" name="confirmarContrasena"
+                                                minlength="6" required="" type="password" />
                                         </div>
                                         <div class="col-12">
                                             <button class="btn btn-primary w-100" type="submit">

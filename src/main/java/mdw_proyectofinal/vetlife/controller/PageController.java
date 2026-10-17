@@ -2,7 +2,6 @@ package mdw_proyectofinal.vetlife.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class PageController {
@@ -25,11 +24,6 @@ public class PageController {
     @GetMapping("/citas")
     public String citas() {
         return "users/citas";
-    }
-
-    @GetMapping("/mascota")
-    public String mascota(@RequestParam(required = false) String from) {
-        return "users/mascota";
     }
 
     @GetMapping("/reservas")

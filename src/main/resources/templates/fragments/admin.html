@@ -68,14 +68,23 @@
 
                     <div class="d-flex align-items-center gap-2 ms-3">
                         <span
-                            class="avatar-admin rounded-circle bg-primary-subtle text-primary d-inline-flex align-items-center justify-content-center fw-bold">
+                            class="avatar-admin rounded-circle bg-primary-subtle text-primary d-inline-flex align-items-center justify-content-center fw-bold"
+                            th:text="${session != null and session.nombre != null ?
+                                #strings.substring(session.nombre, 0, 1) : 'DR'}">
                             DR
                         </span>
 
                         <div class="d-none d-sm-block">
-                            <div class="small fw-semibold">Dra. Ram&iacute;rez</div>
+                            <div class="small fw-semibold"
+                                th:text="${session != null and session.nombre != null ? session.nombre : 'Dra. Ram\u00edrez'}">
+                                Dra. Ram&iacute;rez
+                            </div>
                             <div class="small text-secondary">Administrador</div>
                         </div>
+
+                        <a class="btn btn-sm btn-outline-secondary ms-2" href="/logout" th:href="@{/logout}">
+                            Salir
+                        </a>
                     </div>
                 </header>
                 <main class="container-fluid p-4 p-lg-5">

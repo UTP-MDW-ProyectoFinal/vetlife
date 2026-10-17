@@ -34,10 +34,19 @@
                         </li>
                     </ul>
                     <div class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2"
-                        id="zonaUsuario">
+                        id="zonaUsuario" th:if="${session == null or session.rol == null}">
                         <a class="nav-link" href="/login" th:href="@{/login}">Iniciar sesi&oacute;n</a>
                         <a class="btn btn-primary btn-sm px-3" href="/registro"
                             th:href="@{/registro}">Crear cuenta</a>
+                    </div>
+                    <div class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2"
+                        id="zonaUsuario" th:if="${session != null and session.rol != null}">
+                        <span class="nav-link disabled text-truncate" style="max-width: 160px;"
+                            th:text="${session.nombre}">Usuario</span>
+                        <a class="nav-link" href="/perfil" th:if="${session.rol == 'usuario'}"
+                            th:href="@{/perfil}">Mi perfil</a>
+                        <a class="btn btn-outline-primary btn-sm px-3" href="/logout"
+                            th:href="@{/logout}">Cerrar sesi&oacute;n</a>
                     </div>
                 </div>
             </div>

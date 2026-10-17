@@ -27,7 +27,7 @@
                                         </p>
                                     </div>
                                     <div class="small opacity-75">
-                                        Demo frontend est&aacute;tico.
+                                        Ingresa con las credenciales de prueba.
                                     </div>
                                 </aside>
                                 <section class="col-md-7 p-4 p-lg-5">
@@ -38,13 +38,18 @@
                                         Usa tu correo/DNI o las credenciales de administrador de
                                         demostraci&oacute;n.
                                     </p>
-                                    <form class="mt-4" id="formularioInicioSesion" novalidate="">
+                                    <form class="mt-4" id="formularioInicioSesion" th:action="@{/login}"
+                                        method="post" novalidate="">
+                                        <div class="alert alert-danger" role="alert" th:if="${error}">
+                                            <i class="bi bi-exclamation-triangle me-1"></i>
+                                            <span th:text="${error}">Error</span>
+                                        </div>
                                         <div class="mb-3">
                                             <label class="form-label" for="usuarioInicio">
                                                 Correo, DNI o usuario
                                             </label>
                                             <input autocomplete="username" class="form-control" id="usuarioInicio"
-                                                required="" />
+                                                name="usuario" required="" />
                                         </div>
                                         <div class="mb-3">
                                             <label class="form-label" for="contrasenaInicio">
@@ -52,7 +57,8 @@
                                             </label>
                                             <div class="input-group">
                                                 <input autocomplete="current-password" class="form-control"
-                                                    id="contrasenaInicio" required="" type="password" />
+                                                    id="contrasenaInicio" name="contrasena" required=""
+                                                    type="password" />
                                                 <button aria-label="Mostrar contrase&ntilde;a"
                                                     class="btn btn-outline-secondary"
                                                     data-mostrar-contrasena="#contrasenaInicio"
@@ -64,6 +70,11 @@
                                         </button>
                                     </form>
                                     <div class="alert alert-light border mt-4 small mb-0">
+                                        <strong>
+                                            Usuario demo:
+                                        </strong>
+                                        maria.gonzalez@vetlife.com / 123456
+                                        <br />
                                         <strong>
                                             Administrador demo:
                                         </strong>

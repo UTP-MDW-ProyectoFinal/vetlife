@@ -12,245 +12,39 @@
         <section aria-labelledby="tituloListaPacientes">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h2 id="tituloListaPacientes" class="h5 mb-0">Pacientes registrados</h2>
-                <span id="contadorPacientes" class="badge text-bg-secondary">10 pacientes</span>
+                <span id="contadorPacientes" class="badge text-bg-secondary"
+                    th:text="${#lists.isEmpty(mascotas)} ? '0 pacientes'
+                        : ${#lists.size(mascotas)} + ' pacientes'">3 pacientes</span>
             </div>
             <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4" id="gridPacientes">
-                <div class="col">
+                <div class="col" th:each="mascota : ${mascotas}">
                     <article class="card h-100 shadow-sm">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-start gap-3">
                                 <div class="d-flex align-items-center gap-3">
                                     <div>
-                                        <h3 class="h5 mb-1">Luna</h3>
-                                        <p class="small text-secondary mb-0">Perro &middot; Border Collie</p>
+                                        <h3 class="h5 mb-1" th:text="${mascota.nombre}">Luna</h3>
+                                        <p class="small text-secondary mb-0">
+                                            <span th:text="${mascota.especie}">Perro</span>
+                                            <span th:if="${!#strings.isEmpty(mascota.raza)}">
+                                                &middot;
+                                                <span th:text="${mascota.raza}">Border Collie</span>
+                                            </span>
+                                        </p>
                                     </div>
                                 </div>
-                                <span class="badge text-bg-success">activo</span>
+                                <span class="badge"
+                                    th:classappend="${mascota.activa} ? 'text-bg-success' : 'text-bg-secondary'"
+                                    th:text="${mascota.activa} ? 'activo' : 'inactivo'">activo</span>
                             </div>
                             <hr>
                             <dl class="row small mb-0">
                                 <dt class="col-5 text-secondary">Propietario</dt>
-                                <dd class="col-7">Mar&iacute;a Gonz&aacute;lez</dd>
+                                <dd class="col-7" th:text="${duenios[mascota.id]}">Mar&iacute;a Gonz&aacute;lez</dd>
                                 <dt class="col-5 text-secondary">Edad</dt>
-                                <dd class="col-7">4 a&ntilde;os</dd>
+                                <dd class="col-7" th:text="${mascota.edad}">4 a&ntilde;os</dd>
                                 <dt class="col-5 text-secondary">Visitas</dt>
-                                <dd class="col-7">12</dd>
-                            </dl>
-                        </div>
-                    </article>
-                </div>
-                <div class="col">
-                    <article class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start gap-3">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div>
-                                        <h3 class="h5 mb-1">Simba</h3>
-                                        <p class="small text-secondary mb-0">Gato &middot; Persa</p>
-                                    </div>
-                                </div>
-                                <span class="badge text-bg-success">activo</span>
-                            </div>
-                            <hr>
-                            <dl class="row small mb-0">
-                                <dt class="col-5 text-secondary">Propietario</dt>
-                                <dd class="col-7">Carlos M&eacute;ndez</dd>
-                                <dt class="col-5 text-secondary">Edad</dt>
-                                <dd class="col-7">6 a&ntilde;os</dd>
-                                <dt class="col-5 text-secondary">Visitas</dt>
-                                <dd class="col-7">8</dd>
-                            </dl>
-                        </div>
-                    </article>
-                </div>
-                <div class="col">
-                    <article class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start gap-3">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div>
-                                        <h3 class="h5 mb-1">Rocky</h3>
-                                        <p class="small text-secondary mb-0">Perro &middot; Labrador</p>
-                                    </div>
-                                </div>
-                                <span class="badge text-bg-success">activo</span>
-                            </div>
-                            <hr>
-                            <dl class="row small mb-0">
-                                <dt class="col-5 text-secondary">Propietario</dt>
-                                <dd class="col-7">Ana Torres</dd>
-                                <dt class="col-5 text-secondary">Edad</dt>
-                                <dd class="col-7">2 a&ntilde;os</dd>
-                                <dt class="col-5 text-secondary">Visitas</dt>
-                                <dd class="col-7">5</dd>
-                            </dl>
-                        </div>
-                    </article>
-                </div>
-                <div class="col">
-                    <article class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start gap-3">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div>
-                                        <h3 class="h5 mb-1">Milo</h3>
-                                        <p class="small text-secondary mb-0">Conejo &middot; Belier</p>
-                                    </div>
-                                </div>
-                                <span class="badge text-bg-success">activo</span>
-                            </div>
-                            <hr>
-                            <dl class="row small mb-0">
-                                <dt class="col-5 text-secondary">Propietario</dt>
-                                <dd class="col-7">Pedro Ruiz</dd>
-                                <dt class="col-5 text-secondary">Edad</dt>
-                                <dd class="col-7">1 a&ntilde;o</dd>
-                                <dt class="col-5 text-secondary">Visitas</dt>
-                                <dd class="col-7">3</dd>
-                            </dl>
-                        </div>
-                    </article>
-                </div>
-                <div class="col">
-                    <article class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start gap-3">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div>
-                                        <h3 class="h5 mb-1">Bella</h3>
-                                        <p class="small text-secondary mb-0">Perro &middot; Bulldog Franc&eacute;s</p>
-                                    </div>
-                                </div>
-                                <span class="badge text-bg-success">activo</span>
-                            </div>
-                            <hr>
-                            <dl class="row small mb-0">
-                                <dt class="col-5 text-secondary">Propietario</dt>
-                                <dd class="col-7">Laura Sosa</dd>
-                                <dt class="col-5 text-secondary">Edad</dt>
-                                <dd class="col-7">3 a&ntilde;os</dd>
-                                <dt class="col-5 text-secondary">Visitas</dt>
-                                <dd class="col-7">7</dd>
-                            </dl>
-                        </div>
-                    </article>
-                </div>
-                <div class="col">
-                    <article class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start gap-3">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div>
-                                        <h3 class="h5 mb-1">Max</h3>
-                                        <p class="small text-secondary mb-0">Perro &middot; Golden Retriever</p>
-                                    </div>
-                                </div>
-                                <span class="badge text-bg-success">activo</span>
-                            </div>
-                            <hr>
-                            <dl class="row small mb-0">
-                                <dt class="col-5 text-secondary">Propietario</dt>
-                                <dd class="col-7">Jorge Flores</dd>
-                                <dt class="col-5 text-secondary">Edad</dt>
-                                <dd class="col-7">7 a&ntilde;os</dd>
-                                <dt class="col-5 text-secondary">Visitas</dt>
-                                <dd class="col-7">22</dd>
-                            </dl>
-                        </div>
-                    </article>
-                </div>
-                <div class="col">
-                    <article class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start gap-3">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div>
-                                        <h3 class="h5 mb-1">Coco</h3>
-                                        <p class="small text-secondary mb-0">Ave &middot; Loro Africano</p>
-                                    </div>
-                                </div>
-                                <span class="badge text-bg-success">activo</span>
-                            </div>
-                            <hr>
-                            <dl class="row small mb-0">
-                                <dt class="col-5 text-secondary">Propietario</dt>
-                                <dd class="col-7">Sandra Lima</dd>
-                                <dt class="col-5 text-secondary">Edad</dt>
-                                <dd class="col-7">5 a&ntilde;os</dd>
-                                <dt class="col-5 text-secondary">Visitas</dt>
-                                <dd class="col-7">4</dd>
-                            </dl>
-                        </div>
-                    </article>
-                </div>
-                <div class="col">
-                    <article class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start gap-3">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div>
-                                        <h3 class="h5 mb-1">Nala</h3>
-                                        <p class="small text-secondary mb-0">Gato &middot; Siam&eacute;s</p>
-                                    </div>
-                                </div>
-                                <span class="badge text-bg-secondary">inactivo</span>
-                            </div>
-                            <hr>
-                            <dl class="row small mb-0">
-                                <dt class="col-5 text-secondary">Propietario</dt>
-                                <dd class="col-7">Tom&aacute;s Vera</dd>
-                                <dt class="col-5 text-secondary">Edad</dt>
-                                <dd class="col-7">2 a&ntilde;os</dd>
-                                <dt class="col-5 text-secondary">Visitas</dt>
-                                <dd class="col-7">6</dd>
-                            </dl>
-                        </div>
-                    </article>
-                </div>
-                <div class="col">
-                    <article class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start gap-3">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div>
-                                        <h3 class="h5 mb-1">Toby</h3>
-                                        <p class="small text-secondary mb-0">Perro &middot; Poodle</p>
-                                    </div>
-                                </div>
-                                <span class="badge text-bg-success">activo</span>
-                            </div>
-                            <hr>
-                            <dl class="row small mb-0">
-                                <dt class="col-5 text-secondary">Propietario</dt>
-                                <dd class="col-7">Patricia R&iacute;os</dd>
-                                <dt class="col-5 text-secondary">Edad</dt>
-                                <dd class="col-7">9 a&ntilde;os</dd>
-                                <dt class="col-5 text-secondary">Visitas</dt>
-                                <dd class="col-7">34</dd>
-                            </dl>
-                        </div>
-                    </article>
-                </div>
-                <div class="col">
-                    <article class="card h-100 shadow-sm">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start gap-3">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div>
-                                        <h3 class="h5 mb-1">Lola</h3>
-                                        <p class="small text-secondary mb-0">Perro &middot; D&aacute;lmata</p>
-                                    </div>
-                                </div>
-                                <span class="badge text-bg-success">activo</span>
-                            </div>
-                            <hr>
-                            <dl class="row small mb-0">
-                                <dt class="col-5 text-secondary">Propietario</dt>
-                                <dd class="col-7">Andr&eacute;s Pinto</dd>
-                                <dt class="col-5 text-secondary">Edad</dt>
-                                <dd class="col-7">3 a&ntilde;os</dd>
-                                <dt class="col-5 text-secondary">Visitas</dt>
-                                <dd class="col-7">9</dd>
+                                <dd class="col-7" th:text="${mascota.visitas}">12</dd>
                             </dl>
                         </div>
                     </article>

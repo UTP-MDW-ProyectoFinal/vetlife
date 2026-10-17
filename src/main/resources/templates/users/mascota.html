@@ -24,18 +24,27 @@
                                         </p>
                                     </div>
                                 </div>
-                                <form class="row g-4" id="formularioMascota">
+                                <div class="alert alert-success" role="alert" th:if="${mensaje}">
+                                    <i class="bi bi-check-circle me-1"></i>
+                                    <span th:text="${mensaje}">Mensaje</span>
+                                </div>
+                                <div class="alert alert-danger" role="alert" th:if="${error}">
+                                    <i class="bi bi-exclamation-triangle me-1"></i>
+                                    <span th:text="${error}">Error</span>
+                                </div>
+                                <form class="row g-4" id="formularioMascota" th:action="@{/mascota}" method="post">
                                     <div class="col-md-6">
                                         <label class="form-label" for="mascotaNombre">
                                             Nombre
                                         </label>
-                                        <input class="form-control" id="mascotaNombre" required="" />
+                                        <input class="form-control" id="mascotaNombre" name="nombre" required="" />
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label" for="mascotaRaza">
                                             Raza
                                         </label>
-                                        <input class="form-control" id="mascotaRaza" placeholder="Ej. Labrador" />
+                                        <input class="form-control" id="mascotaRaza" name="raza"
+                                            placeholder="Ej. Labrador" />
                                     </div>
                                     <fieldset class="col-12">
                                         <legend class="form-label fs-6">
@@ -83,13 +92,14 @@
                                         <label class="form-label" for="mascotaEdad">
                                             Edad
                                         </label>
-                                        <input class="form-control" id="mascotaEdad" placeholder="Ej. 4 a&ntilde;os" />
+                                        <input class="form-control" id="mascotaEdad" name="edad"
+                                            placeholder="Ej. 4 a&ntilde;os" />
                                     </div>
                                     <div class="col-md-6">
                                         <label class="form-label" for="mascotaSexo">
                                             Sexo
                                         </label>
-                                        <select class="form-select" id="mascotaSexo">
+                                        <select class="form-select" id="mascotaSexo" name="sexo">
                                             <option value="Hembra">
                                                 Hembra
                                             </option>
