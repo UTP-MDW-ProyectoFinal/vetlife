@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 
 <head>
     <meta charset="utf-8">
@@ -8,29 +8,29 @@
     <title>Pacientes | VetLife</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link th:href="@{/assets/css/estilos.css}" rel="stylesheet">
+    <link href="../assets/css/estilos.css" rel="stylesheet">
 </head>
 
-<body class="admin-fondo" data-admin-pagina="pacientes" data-pagina="admin-pacientes" data-requiere="administrador">
+<body class="admin-fondo" data-admin-pagina="pacientes">
     <div class="d-flex admin-layout">
         <aside class="admin-sidebar d-flex flex-column flex-shrink-0 p-3" id="barraLateralAdmin">
-            <a class="d-flex align-items-center gap-2 text-white mb-4" th:href="@{/admin/dashboard}">
-                <img class="img-fluid" style="max-width: 120px;" th:src="@{/assets/img/iconoR.jpeg}"
+            <a class="d-flex align-items-center gap-2 text-white mb-4" href="dashboard.html">
+                <img class="img-fluid" style="max-width: 120px;" src="../assets/img/iconoR.jpeg"
                     alt="Logo de VetLifeRosa">
             </a>
             <nav aria-label="Menú administrativo">
                 <ul class="nav nav-pills flex-column gap-1">
                     <li><a class="nav-link d-flex align-items-center gap-2 px-3 py-2" data-pagina-nav="admin-dashboard"
-                            th:href="@{/admin/dashboard}">
+                            href="dashboard.html">
                             Dashboard</a></li>
                     <li><a class="nav-link d-flex align-items-center gap-2 px-3 py-2" data-pagina-nav="admin-citas"
-                            th:href="@{/admin/gestion-citas}">
+                            href="gestion-citas.html">
                             Citas</a></li>
                     <li><a class="nav-link d-flex align-items-center gap-2 px-3 py-2 active"
-                            data-pagina-nav="admin-pacientes" th:href="@{/admin/pacientes}">
+                            data-pagina-nav="admin-pacientes" href="pacientes.html">
                             Pacientes</a></li>
                     <li><a class="nav-link d-flex align-items-center gap-2 px-3 py-2" data-pagina-nav="admin-servicios"
-                            th:href="@{/admin/gestion-servicios}">
+                            href="gestion-servicios.html">
                             Servicios</a></li>
                 </ul>
             </nav>
@@ -48,7 +48,7 @@
                 </button>
 
                 <button class="btn btn-light border ms-auto" type="button" aria-label="Sitio Web">
-                    <a class="text-decoration-none" th:href="@{/}">Web</a>
+                    <a class="text-decoration-none" href="../index.html ">Web</a>
                 </button>
 
                 <div class="d-flex align-items-center gap-2 ms-3">
@@ -71,56 +71,255 @@
                     <p class="text-secondary mb-0">Consulta rápidamente la información de las mascotas atendidas.</p>
                 </header>
 
-                <section class="card shadow-sm mb-4" aria-labelledby="tituloFiltrosPacientes">
-                    <div class="card-body">
-                        <h2 id="tituloFiltrosPacientes" class="h5 mb-3">Buscar pacientes</h2>
-                        <div class="row g-3 align-items-end">
-                            <div class="col-lg-7">
-                                <label for="buscarPaciente" class="form-label">Paciente, propietario o raza</label>
-                                <div class="input-group">
-                                    <span class="input-group-text">
-                                    </span>
-                                    <input class="form-control" id="buscarPaciente" type="search"
-                                        placeholder="Ej. Luna, María o Labrador">
-                                </div>
-                            </div>
-                            <div class="col-lg-5">
-                                <label for="filtroEspecie" class="form-label">Especie</label>
-                                <select class="form-select" id="filtroEspecie">
-                                    <option value="todas">Todas las especies</option>
-                                    <option value="Perro">Perro</option>
-                                    <option value="Gato">Gato</option>
-                                    <option value="Ave">Ave</option>
-                                    <option value="Conejo">Conejo</option>
-                                    <option value="Reptil">Reptil</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
                 <section aria-labelledby="tituloListaPacientes">
                     <div class="d-flex justify-content-between align-items-center mb-3">
                         <h2 id="tituloListaPacientes" class="h5 mb-0">Pacientes registrados</h2>
-                        <span id="contadorPacientes" class="badge text-bg-secondary">0 pacientes</span>
+                        <span id="contadorPacientes" class="badge text-bg-secondary">10 pacientes</span>
                     </div>
-                    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4" id="gridPacientes"></div>
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4" id="gridPacientes">
+                        <div class="col">
+                            <article class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start gap-3">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div>
+                                                <h3 class="h5 mb-1">Luna</h3>
+                                                <p class="small text-secondary mb-0">Perro · Border Collie</p>
+                                            </div>
+                                        </div>
+                                        <span class="badge text-bg-success">activo</span>
+                                    </div>
+                                    <hr>
+                                    <dl class="row small mb-0">
+                                        <dt class="col-5 text-secondary">Propietario</dt>
+                                        <dd class="col-7">María González</dd>
+                                        <dt class="col-5 text-secondary">Edad</dt>
+                                        <dd class="col-7">4 años</dd>
+                                        <dt class="col-5 text-secondary">Visitas</dt>
+                                        <dd class="col-7">12</dd>
+                                    </dl>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="col">
+                            <article class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start gap-3">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div>
+                                                <h3 class="h5 mb-1">Simba</h3>
+                                                <p class="small text-secondary mb-0">Gato · Persa</p>
+                                            </div>
+                                        </div>
+                                        <span class="badge text-bg-success">activo</span>
+                                    </div>
+                                    <hr>
+                                    <dl class="row small mb-0">
+                                        <dt class="col-5 text-secondary">Propietario</dt>
+                                        <dd class="col-7">Carlos Méndez</dd>
+                                        <dt class="col-5 text-secondary">Edad</dt>
+                                        <dd class="col-7">6 años</dd>
+                                        <dt class="col-5 text-secondary">Visitas</dt>
+                                        <dd class="col-7">8</dd>
+                                    </dl>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="col">
+                            <article class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start gap-3">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div>
+                                                <h3 class="h5 mb-1">Rocky</h3>
+                                                <p class="small text-secondary mb-0">Perro · Labrador</p>
+                                            </div>
+                                        </div>
+                                        <span class="badge text-bg-success">activo</span>
+                                    </div>
+                                    <hr>
+                                    <dl class="row small mb-0">
+                                        <dt class="col-5 text-secondary">Propietario</dt>
+                                        <dd class="col-7">Ana Torres</dd>
+                                        <dt class="col-5 text-secondary">Edad</dt>
+                                        <dd class="col-7">2 años</dd>
+                                        <dt class="col-5 text-secondary">Visitas</dt>
+                                        <dd class="col-7">5</dd>
+                                    </dl>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="col">
+                            <article class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start gap-3">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div>
+                                                <h3 class="h5 mb-1">Milo</h3>
+                                                <p class="small text-secondary mb-0">Conejo · Belier</p>
+                                            </div>
+                                        </div>
+                                        <span class="badge text-bg-success">activo</span>
+                                    </div>
+                                    <hr>
+                                    <dl class="row small mb-0">
+                                        <dt class="col-5 text-secondary">Propietario</dt>
+                                        <dd class="col-7">Pedro Ruiz</dd>
+                                        <dt class="col-5 text-secondary">Edad</dt>
+                                        <dd class="col-7">1 año</dd>
+                                        <dt class="col-5 text-secondary">Visitas</dt>
+                                        <dd class="col-7">3</dd>
+                                    </dl>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="col">
+                            <article class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start gap-3">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div>
+                                                <h3 class="h5 mb-1">Bella</h3>
+                                                <p class="small text-secondary mb-0">Perro · Bulldog Francés</p>
+                                            </div>
+                                        </div>
+                                        <span class="badge text-bg-success">activo</span>
+                                    </div>
+                                    <hr>
+                                    <dl class="row small mb-0">
+                                        <dt class="col-5 text-secondary">Propietario</dt>
+                                        <dd class="col-7">Laura Sosa</dd>
+                                        <dt class="col-5 text-secondary">Edad</dt>
+                                        <dd class="col-7">3 años</dd>
+                                        <dt class="col-5 text-secondary">Visitas</dt>
+                                        <dd class="col-7">7</dd>
+                                    </dl>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="col">
+                            <article class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start gap-3">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div>
+                                                <h3 class="h5 mb-1">Max</h3>
+                                                <p class="small text-secondary mb-0">Perro · Golden Retriever</p>
+                                            </div>
+                                        </div>
+                                        <span class="badge text-bg-success">activo</span>
+                                    </div>
+                                    <hr>
+                                    <dl class="row small mb-0">
+                                        <dt class="col-5 text-secondary">Propietario</dt>
+                                        <dd class="col-7">Jorge Flores</dd>
+                                        <dt class="col-5 text-secondary">Edad</dt>
+                                        <dd class="col-7">7 años</dd>
+                                        <dt class="col-5 text-secondary">Visitas</dt>
+                                        <dd class="col-7">22</dd>
+                                    </dl>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="col">
+                            <article class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start gap-3">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div>
+                                                <h3 class="h5 mb-1">Coco</h3>
+                                                <p class="small text-secondary mb-0">Ave · Loro Africano</p>
+                                            </div>
+                                        </div>
+                                        <span class="badge text-bg-success">activo</span>
+                                    </div>
+                                    <hr>
+                                    <dl class="row small mb-0">
+                                        <dt class="col-5 text-secondary">Propietario</dt>
+                                        <dd class="col-7">Sandra Lima</dd>
+                                        <dt class="col-5 text-secondary">Edad</dt>
+                                        <dd class="col-7">5 años</dd>
+                                        <dt class="col-5 text-secondary">Visitas</dt>
+                                        <dd class="col-7">4</dd>
+                                    </dl>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="col">
+                            <article class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start gap-3">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div>
+                                                <h3 class="h5 mb-1">Nala</h3>
+                                                <p class="small text-secondary mb-0">Gato · Siamés</p>
+                                            </div>
+                                        </div>
+                                        <span class="badge text-bg-secondary">inactivo</span>
+                                    </div>
+                                    <hr>
+                                    <dl class="row small mb-0">
+                                        <dt class="col-5 text-secondary">Propietario</dt>
+                                        <dd class="col-7">Tomás Vera</dd>
+                                        <dt class="col-5 text-secondary">Edad</dt>
+                                        <dd class="col-7">2 años</dd>
+                                        <dt class="col-5 text-secondary">Visitas</dt>
+                                        <dd class="col-7">6</dd>
+                                    </dl>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="col">
+                            <article class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start gap-3">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div>
+                                                <h3 class="h5 mb-1">Toby</h3>
+                                                <p class="small text-secondary mb-0">Perro · Poodle</p>
+                                            </div>
+                                        </div>
+                                        <span class="badge text-bg-success">activo</span>
+                                    </div>
+                                    <hr>
+                                    <dl class="row small mb-0">
+                                        <dt class="col-5 text-secondary">Propietario</dt>
+                                        <dd class="col-7">Patricia Ríos</dd>
+                                        <dt class="col-5 text-secondary">Edad</dt>
+                                        <dd class="col-7">9 años</dd>
+                                        <dt class="col-5 text-secondary">Visitas</dt>
+                                        <dd class="col-7">34</dd>
+                                    </dl>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="col">
+                            <article class="card h-100 shadow-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start gap-3">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <div>
+                                                <h3 class="h5 mb-1">Lola</h3>
+                                                <p class="small text-secondary mb-0">Perro · Dálmata</p>
+                                            </div>
+                                        </div>
+                                        <span class="badge text-bg-success">activo</span>
+                                    </div>
+                                    <hr>
+                                    <dl class="row small mb-0">
+                                        <dt class="col-5 text-secondary">Propietario</dt>
+                                        <dd class="col-7">Andrés Pinto</dd>
+                                        <dt class="col-5 text-secondary">Edad</dt>
+                                        <dd class="col-7">3 años</dd>
+                                        <dt class="col-5 text-secondary">Visitas</dt>
+                                        <dd class="col-7">9</dd>
+                                    </dl>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
                 </section>
             </main>
-        </div>
-    </div>
-
-    <div class="modal fade" id="modalPaciente" tabindex="-1" aria-labelledby="tituloModalPaciente" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2 class="modal-title fs-5" id="tituloModalPaciente">Ficha del paciente</h2>
-                </div>
-                <div class="modal-body" id="detallePaciente"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -128,11 +327,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
-    <script th:src="@{/assets/js/datos.js}"></script>
-    <script th:src="@{/assets/js/utilidades.js}"></script>
-    <script th:src="@{/assets/js/autenticacion.js}"></script>
-    <script th:src="@{/assets/js/administrador.js}"></script>
-    <script th:src="@{/assets/js/app.js}"></script>
+    <script src="../assets/js/app.js"></script>
 </body>
 
 </html>

@@ -1,19 +1,57 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 
 <head>
-    <!-- Ticket de Brayan: head base (title dinamico) -->
-    <th:block th:replace="~{fragments/base :: paginaHead('Servicios')}" />
-    <!-- CSS extra solo de esta pagina -->
-    <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
-    <!-- Fin Ticket de Brayan -->
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <meta content="VetLife, cl&iacute;nica veterinaria y gesti&oacute;n de citas para mascotas." name="description" />
+    <title>
+        Servicios | VetLife
+    </title>
+    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+        <link href="../assets/css/estilos.css" rel="stylesheet" />
+    
 </head>
 
-<body>
-    <!-- Ticket de Brayan: header, contenido principal y footer -->
-    <th:block th:replace="~{fragments/headerFooter :: header('servicios')}" />
-
+<body data-pagina="servicios">
+    <header>
+        <nav aria-label="Navegaci&oacute;n principal" class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+            <div class="container py-2">
+                <a class="navbar-brand d-flex align-items-center gap-2" href="../index.html">
+                    <img class="img-fluid" style="max-width: 120px;" src="../assets/img/iconoW.jpeg" alt="Logo de VetLife">
+                    
+                </a>
+                <button aria-controls="menuPrincipal" aria-label="Abrir men&uacute;" class="navbar-toggler"
+                    data-bs-target="#menuPrincipal" data-bs-toggle="collapse" type="button">
+                    <span class="small fw-semibold">Menú</span>
+                </button>
+                <div class="collapse navbar-collapse" id="menuPrincipal">
+                    <ul class="navbar-nav mx-lg-auto mb-3 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" data-pagina-nav="inicio" href="../index.html">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-pagina-nav="servicios" href="servicios.html">Servicios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-pagina-nav="citas" href="citas.html">Reservar
+                                cita</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-pagina-nav="contacto" href="contacto.html">Contacto</a>
+                        </li>
+                    </ul>
+                    <div class="d-flex flex-column flex-lg-row align-items-stretch align-items-lg-center gap-2"
+                        id="zonaUsuario">
+                        <a class="nav-link" href="login.html">Iniciar sesión</a>
+                        <a class="btn btn-primary btn-sm px-3" href="registro.html">Crear cuenta</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
     <main>
         <section class="py-5 bg-primary-subtle border-bottom border">
             <div class="container">
@@ -30,48 +68,294 @@
             </div>
         </section>
         <section class="py-5 container">
-            <div id="listaServiciosPublicos">
-                <section class="mb-5" th:each="categoria : ${categorias}">
-                    <div class="d-flex align-items-center gap-2 mb-3">
-                        <span class="badge bg-primary-subtle text-primary" th:text="${categoria.nombre}">
-                            Cirug&iacute;a
-                        </span>
-                        <span class="text-secondary small"
-                            th:text="${#lists.size(categoria.servicios)} + ' servicios'">
-                            3 servicios
-                        </span>
-                    </div>
-                    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
-                        <article class="col" th:each="servicio : ${categoria.servicios}">
-                            <div class="card shadow-sm h-100">
-                                <div class="card-body p-4">
-                                    <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3"
-                                        style="width:48px;height:48px;">
-                                        <i class="bi fs-4" th:classappend="${servicio.icono}"></i>
-                                    </div>
-                                    <h2 class="h5" th:text="${servicio.nombre}">Laparoscop&iacute;a</h2>
-                                    <p class="small text-secondary mb-3" th:text="${servicio.descripcion}">
-                                        Atenci&oacute;n veterinaria con seguimiento profesional y registro
-                                        digital.
-                                    </p>
-                                    <div class="d-flex justify-content-between small">
-                                        <span th:text="${servicio.duracionFormateada}">1 h</span>
-                                        <strong class="text-primary"
-                                            th:text="'S/ ' + ${servicio.precioFormateado}">S/ 180.00</strong>
-                                    </div>
+            <section class="mb-5">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="badge bg-primary-subtle text-primary">Cirugía</span>
+                    <span class="text-secondary small">3 servicios</span>
+                </div>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+                    <article class="col">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body p-4">
+                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3" style="width:48px;height:48px;">
+                                    <i class="bi bi-camera-reels fs-4"></i>
+                                </div>
+                                <h2 class="h5">Laparoscopía</h2>
+                                <p class="small text-secondary mb-3">Atención veterinaria con seguimiento profesional y registro digital.</p>
+                                <div class="d-flex justify-content-between small">
+                                    <span>1 h</span>
+                                    <strong class="text-primary">S/ 180</strong>
                                 </div>
                             </div>
-                        </article>
-                    </div>
-                </section>
-            </div>
+                        </div>
+                    </article>
+                    <article class="col">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body p-4">
+                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3" style="width:48px;height:48px;">
+                                    <i class="bi bi-bandaid fs-4"></i>
+                                </div>
+                                <h2 class="h5">Traumatología</h2>
+                                <p class="small text-secondary mb-3">Atención veterinaria con seguimiento profesional y registro digital.</p>
+                                <div class="d-flex justify-content-between small">
+                                    <span>1 h</span>
+                                    <strong class="text-primary">S/ 150</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="col">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body p-4">
+                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3" style="width:48px;height:48px;">
+                                    <i class="bi bi-lungs fs-4"></i>
+                                </div>
+                                <h2 class="h5">Anestesia Inhalatoria</h2>
+                                <p class="small text-secondary mb-3">Atención veterinaria con seguimiento profesional y registro digital.</p>
+                                <div class="d-flex justify-content-between small">
+                                    <span>3 h</span>
+                                    <strong class="text-primary">S/ 30</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <section class="mb-5">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="badge bg-primary-subtle text-primary">Medicina Interna</span>
+                    <span class="text-secondary small">3 servicios</span>
+                </div>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+                    <article class="col">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body p-4">
+                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3" style="width:48px;height:48px;">
+                                    <i class="bi bi-heart-pulse fs-4"></i>
+                                </div>
+                                <h2 class="h5">Cardiología</h2>
+                                <p class="small text-secondary mb-3">Atención veterinaria con seguimiento profesional y registro digital.</p>
+                                <div class="d-flex justify-content-between small">
+                                    <span>45 min</span>
+                                    <strong class="text-primary">S/ 55</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="col">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body p-4">
+                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3" style="width:48px;height:48px;">
+                                    <i class="bi bi-gender-female fs-4"></i>
+                                </div>
+                                <h2 class="h5">Ginecología</h2>
+                                <p class="small text-secondary mb-3">Atención veterinaria con seguimiento profesional y registro digital.</p>
+                                <div class="d-flex justify-content-between small">
+                                    <span>45 min</span>
+                                    <strong class="text-primary">S/ 95</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="col">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body p-4">
+                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3" style="width:48px;height:48px;">
+                                    <i class="bi bi-clipboard2-pulse fs-4"></i>
+                                </div>
+                                <h2 class="h5">Patología</h2>
+                                <p class="small text-secondary mb-3">Atención veterinaria con seguimiento profesional y registro digital.</p>
+                                <div class="d-flex justify-content-between small">
+                                    <span>20 min</span>
+                                    <strong class="text-primary">S/ 40</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <section class="mb-5">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="badge bg-primary-subtle text-primary">Imagenología</span>
+                    <span class="text-secondary small">3 servicios</span>
+                </div>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+                    <article class="col">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body p-4">
+                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3" style="width:48px;height:48px;">
+                                    <i class="bi bi-camera-video fs-4"></i>
+                                </div>
+                                <h2 class="h5">Endoscopia</h2>
+                                <p class="small text-secondary mb-3">Atención veterinaria con seguimiento profesional y registro digital.</p>
+                                <div class="d-flex justify-content-between small">
+                                    <span>30 min</span>
+                                    <strong class="text-primary">S/ 45</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="col">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body p-4">
+                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3" style="width:48px;height:48px;">
+                                    <i class="bi bi-soundwave fs-4"></i>
+                                </div>
+                                <h2 class="h5">Ecografía</h2>
+                                <p class="small text-secondary mb-3">Atención veterinaria con seguimiento profesional y registro digital.</p>
+                                <div class="d-flex justify-content-between small">
+                                    <span>20 min</span>
+                                    <strong class="text-primary">S/ 35</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="col">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body p-4">
+                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3" style="width:48px;height:48px;">
+                                    <i class="bi bi-radioactive fs-4"></i>
+                                </div>
+                                <h2 class="h5">Rayos X Digital</h2>
+                                <p class="small text-secondary mb-3">Atención veterinaria con seguimiento profesional y registro digital.</p>
+                                <div class="d-flex justify-content-between small">
+                                    <span>30 min</span>
+                                    <strong class="text-primary">S/ 60</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <section class="mb-5">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="badge bg-primary-subtle text-primary">Diagnóstico</span>
+                    <span class="text-secondary small">1 servicios</span>
+                </div>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+                    <article class="col">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body p-4">
+                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3" style="width:48px;height:48px;">
+                                    <i class="bi bi-droplet fs-4"></i>
+                                </div>
+                                <h2 class="h5">Laboratorio</h2>
+                                <p class="small text-secondary mb-3">Atención veterinaria con seguimiento profesional y registro digital.</p>
+                                <div class="d-flex justify-content-between small">
+                                    <span>2 h</span>
+                                    <strong class="text-primary">S/ 20</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
+            <section class="mb-5">
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <span class="badge bg-primary-subtle text-primary">Cuidados</span>
+                    <span class="text-secondary small">1 servicios</span>
+                </div>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+                    <article class="col">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body p-4">
+                                <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3" style="width:48px;height:48px;">
+                                    <i class="bi bi-hospital fs-4"></i>
+                                </div>
+                                <h2 class="h5">Hospitalización</h2>
+                                <p class="small text-secondary mb-3">Atención veterinaria con seguimiento profesional y registro digital.</p>
+                                <div class="d-flex justify-content-between small">
+                                    <span>1 día(s)</span>
+                                    <strong class="text-primary">S/ 120</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </section>
         </section>
     </main>
-
-    <th:block th:replace="~{fragments/headerFooter :: footer}" />
-
-    <th:block th:replace="~{fragments/base :: scripts}" />
-    <!-- Fin Ticket de Brayan -->
+    <footer class="border-top py-4 bg-white mt-5">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-lg-5">
+                    <div class="d-flex align-items-center gap-2 mb-3">
+                        <span class="brand-wordmark">
+                            Vet
+                            <b>
+                                Life
+                            </b>
+                        </span>
+                    </div>
+                    <h2 class="h5 font-heading">
+                        Cuidamos de quienes forman parte de tu familia.
+                    </h2>
+                    <p class="small text-secondary mb-0">
+                        Cl&iacute;nica veterinaria especializada con reserva digital y seguimiento de
+                        tus mascotas.
+                    </p>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <h2 class="h6">
+                        Enlaces
+                    </h2>
+                    <ul class="list-unstyled small d-grid gap-2 mb-0">
+                        <li>
+                            <a href="../index.html">
+                                Inicio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="servicios.html">
+                                Servicios
+                            </a>
+                        </li>
+                        <li>
+                            <a href="citas.html">
+                                Reservar cita
+                            </a>
+                        </li>
+                        <li>
+                            <a href="contacto.html">
+                                Contacto
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <h2 class="h6">
+                        Contacto
+                    </h2>
+                    <ul class="list-unstyled small text-secondary d-grid gap-2 mb-0">
+                        <li>
+                            +51 995 151 681
+                        </li>
+                        <li>
+                            Vetlifepiura@gmail.com
+                        </li>
+                        <li>
+                            Lun&ndash;Vie 8:00&ndash;18:00 &middot; S&aacute;b 8:00&ndash;13:00
+                        </li>
+                        <li>
+                            Piura, Urb. Angamos Calle C mz K Lote 15
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="border my-4" />
+            <div class="small text-secondary d-flex flex-column flex-md-row justify-content-center gap-2">
+                <span>
+                    &copy; 2026 VetLife. Original to vetlife website.
+                </span>
+            </div>
+        </div>
+    </footer>
+    <div class="position-fixed end-0 bottom-0 m-3" id="contenedorToast">
+    </div>
+    <script crossorigin="anonymous" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+        </script>
+    <script src="../assets/js/app.js"></script>
 </body>
 
 </html>
