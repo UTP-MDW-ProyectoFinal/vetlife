@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+    th:fragment="pagina(titulo, paginaActiva, contenido, cssExtra, jsExtra)">
+
+    <head th:fragment="head(titulo, cssExtra)">
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <meta content="VetLife, cl&iacute;nica veterinaria y gesti&oacute;n de citas para mascotas."
+            name="description" />
+        <title th:text="${titulo} + ' | VetLife'">
+            VetLife
+        </title>
+        <link crossorigin="anonymous"
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+            integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+            rel="stylesheet" />
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+        <link href="/css/estilos.css" rel="stylesheet" th:href="@{/css/estilos.css}" />
+        <th:block th:if="${cssExtra != null}" th:insert="${cssExtra}" />
+    </head>
+
+    <body th:attr="data-pagina=${paginaActiva}">
+        <header th:replace="~{fragments/header :: navbar}" />
+        <th:block th:insert="${contenido}" />
+        <footer th:replace="~{fragments/footer :: pie}" />
+        <div class="position-fixed end-0 bottom-0 m-3" id="contenedorToast">
+        </div>
+        <th:block th:fragment="scripts(jsExtra)">
+            <script crossorigin="anonymous"
+                integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+                src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
+            </script>
+            <script src="/js/app.js" th:src="@{/js/app.js}"></script>
+            <th:block th:if="${jsExtra != null}" th:insert="${jsExtra}" />
+        </th:block>
+    </body>
+
+</html>
