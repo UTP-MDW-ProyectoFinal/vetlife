@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import mdw_proyectofinal.vetlife.model.Usuario;
 import mdw_proyectofinal.vetlife.repository.UsuarioRepository;
 import mdw_proyectofinal.vetlife.service.AuthService;
+import mdw_proyectofinal.vetlife.service.CitaService;
 import mdw_proyectofinal.vetlife.service.MascotaService;
 
 @Controller
@@ -18,10 +19,12 @@ public class UserController {
 
     private final UsuarioRepository usuarioRepository;
     private final MascotaService mascotaService;
+    private final CitaService citaService;
 
-    public UserController(UsuarioRepository usuarioRepository, MascotaService mascotaService) {
+    public UserController(UsuarioRepository usuarioRepository, MascotaService mascotaService, CitaService citaService) {
         this.usuarioRepository = usuarioRepository;
         this.mascotaService = mascotaService;
+        this.citaService = citaService;
     }
 
     @GetMapping("/perfil")
@@ -74,5 +77,36 @@ public class UserController {
         }
         redirectAttributes.addFlashAttribute("mensaje", "Mascota registrada correctamente.");
         return "redirect:/perfil";
+    }
+
+    @PostMapping("/citas")
+    public String reservarCita(@RequestParam String servicioId,
+            @RequestParam String mascotaId,
+            @RequestParam String fecha,
+            @RequestParam String hora,
+            @RequestParam(required = false) String notas,
+            HttpSession sesion,
+            RedirectAttributes redirectAttributes) {
+        Integer usuarioId = (Integer) sesion.getAttribute(AuthService.SESION_USUARIO_ID);
+        if (usuarioId == null) {
+            return "redirect:/login";
+        }
+
+        int mascotaIdNum;
+        try {
+            mascotaIdNum = Integer.parseInt(mascotaId.trim());
+        } catch (NumberFormatException e) {
+            redirectAttributes.addFlashAttribute("error", "Selecciona una mascota válida.");
+            return "redirect:/citas";
+        }
+
+        String error = citaService.reservar(servicioId, mascotaIdNum, fecha, hora, notas, usuarioId);
+        if (error != null) {
+            redirectAttributes.addFlashAttribute("error", error);
+            return "redirect:/citas";
+        }
+
+        redirectAttributes.addFlashAttribute("mensaje", "Cita reservada correctamente. Te esperamos.");
+        return "redirect:/reservas";
     }
 }
