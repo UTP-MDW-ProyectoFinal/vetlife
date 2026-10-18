@@ -80,69 +80,14 @@
                 </p>
             </div>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4" id="serviciosInicio">
-                <div class="col">
+                <div class="col" th:each="servicio : ${serviciosInicio}">
                     <div class="card shadow-sm h-100">
                         <div class="card-body p-4">
                             <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3" style="width:48px;height:48px;">
-                                <i class="bi bi-camera-reels fs-4"></i>
+                                <i class="bi fs-4" th:classappend="${servicio.icono}"></i>
                             </div>
-                            <h3 class="h6">Laparoscop&iacute;a</h3>
-                            <p class="small text-secondary mb-0">Cirug&iacute;a</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3" style="width:48px;height:48px;">
-                                <i class="bi bi-heart-pulse fs-4"></i>
-                            </div>
-                            <h3 class="h6">Cardiolog&iacute;a</h3>
-                            <p class="small text-secondary mb-0">Medicina Interna</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3" style="width:48px;height:48px;">
-                                <i class="bi bi-camera-video fs-4"></i>
-                            </div>
-                            <h3 class="h6">Endoscopia</h3>
-                            <p class="small text-secondary mb-0">Imagenolog&iacute;a</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3" style="width:48px;height:48px;">
-                                <i class="bi bi-gender-female fs-4"></i>
-                            </div>
-                            <h3 class="h6">Ginecolog&iacute;a</h3>
-                            <p class="small text-secondary mb-0">Medicina Interna</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3" style="width:48px;height:48px;">
-                                <i class="bi bi-bandaid fs-4"></i>
-                            </div>
-                            <h3 class="h6">Traumatolog&iacute;a</h3>
-                            <p class="small text-secondary mb-0">Cirug&iacute;a</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card shadow-sm h-100">
-                        <div class="card-body p-4">
-                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3" style="width:48px;height:48px;">
-                                <i class="bi bi-clipboard2-pulse fs-4"></i>
-                            </div>
-                            <h3 class="h6">Patolog&iacute;a</h3>
-                            <p class="small text-secondary mb-0">Medicina Interna</p>
+                            <h3 class="h6" th:text="${servicio.nombre}">Laparoscop&iacute;a</h3>
+                            <p class="small text-secondary mb-0" th:text="${servicio.categoria}">Cirug&iacute;a</p>
                         </div>
                     </div>
                 </div>

@@ -37,15 +37,8 @@
                                     <p class="small text-secondary mb-2">Selecciona la atenci&oacute;n que tu mascota necesitas.</p>
                                     <select class="form-select" id="selectServicio" required>
                                         <option value="" selected disabled>Selecciona un servicio</option>
-                                        <option value="1">Consulta General - S/ 50.00</option>
-                                        <option value="2">Laparoscop&iacute;a - S/ 40.00</option>
-                                        <option value="3">Cardiolog&iacute;a - S/ 60.00</option>
-                                        <option value="4"> Anestesia inhalatoria - S/ 80.00</option>
-                                        <option value="5">Endoscop&iacute;a - S/ 30.00</option>
-                                        <option value="6">Traumatolog&iacute;a - S/ 70.00</option>
-                                        <option value="7">Ginecolog&iacute;a - S/ 80.00</option>
-                                        <option value="8">Patolog&iacute;a - S/ 45.00</option>
-
+                                        <option th:each="servicio : ${servicios}" th:value="${servicio.id}"
+                                            th:text="${servicio.nombre} + ' - S/ ' + ${#numbers.formatDecimal(servicio.precio, 1, 'POINT', 2, 'POINT')}">Laparoscop&iacute;a - S/ 180.00</option>
                                     </select>
                                 </div>
 
