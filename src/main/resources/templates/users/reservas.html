@@ -21,19 +21,27 @@
                     Nueva cita
                 </a>
             </header>
+            <div th:if="${mensaje}" class="alert alert-success" role="alert" th:text="${mensaje}">
+                Cita reservada correctamente.
+            </div>
             <section id="listaReservas">
-                <article class="card card shadow-sm mb-3">
+                <div th:if="${reservas == null or reservas.isEmpty()}" class="text-center py-5">
+                    <p class="text-secondary mb-3">A&uacute;n no tienes citas reservadas.</p>
+                    <a class="btn btn-primary" href="/citas" th:href="@{/citas}">Reservar mi primera cita</a>
+                </div>
+                <article class="card card shadow-sm mb-3" th:each="reserva : ${reservas}">
                     <div class="card-body p-4">
                         <div class="row align-items-center g-4">
                             <div class="col-lg-8">
-                                <span class="badge text-bg-success mb-2">confirmada</span>
-                                <h2 class="h5 mb-2">Consulta General</h2>
-                                <p class="text-secondary mb-1">28/08/2026 &middot; 08:30</p>
-                                <p class="small text-secondary mb-0">Luna</p>
+                                <span class="badge text-bg-warning mb-2" th:text="${reserva.estado}">pendiente</span>
+                                <h2 class="h5 mb-2" th:text="${reserva.servicio}">Consulta General</h2>
+                                <p class="text-secondary mb-1"
+                                    th:text="${reserva.fecha} + ' · ' + ${reserva.hora}">28/08/2026 · 08:30</p>
+                                <p class="small text-secondary mb-0" th:text="${reserva.mascotaNombre}">Luna</p>
                             </div>
                             <div class="col-lg-4 text-lg-end">
                                 <small class="text-secondary d-block">C&oacute;digo</small>
-                                <div class="font-monospace mb-3">C-1001</div>
+                                <div class="font-monospace mb-3" th:text="${reserva.id}">C-1001</div>
                             </div>
                         </div>
                     </div>

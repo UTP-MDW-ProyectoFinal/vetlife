@@ -23,7 +23,16 @@
           <div class="col-lg-8">
             <div class="card shadow-sm border-0 rounded-3">
               <div class="card-body p-4 p-lg-5">
-                <form id="formReservaCita">
+                <form id="formReservaCita"
+                  th:action="@{/citas}"
+                  method="post"
+                  th:attr="data-fecha-servidor=${fechaHoy},data-hora-servidor=${horaServidor}">
+                  <div th:if="${error}" class="alert alert-danger" role="alert" th:text="${error}">
+                    Error al reservar la cita.
+                  </div>
+                  <div th:if="${mensaje}" class="alert alert-success" role="alert" th:text="${mensaje}">
+                    Cita reservada correctamente.
+                  </div>
                   <div class="mb-4">
                     <label
                       for="selectServicio"
@@ -33,7 +42,7 @@
                     <p class="small text-secondary mb-2">
                       Selecciona la atenci&oacute;n que tu mascota necesitas.
                     </p>
-                    <select class="form-select" id="selectServicio" required>
+                    <select class="form-select" id="selectServicio" name="servicioId" required>
                       <option value="" selected disabled>
                         Selecciona un servicio
                       </option>
@@ -56,7 +65,7 @@
                     <p class="small text-secondary mb-2">
                       Elige una mascota de tu cuenta.
                     </p>
-                    <select class="form-select" id="selectMascota" required>
+                    <select class="form-select" id="selectMascota" name="mascotaId" required>
                       <option value="" selected disabled>
                         Seleccione su mascota
                       </option>
@@ -81,13 +90,16 @@
                       <input
                         class="form-control"
                         id="citaFecha"
+                        name="fecha"
                         type="date"
+                        th:min="${fechaHoy}"
+                        th:value="${fechaHoy}"
                         required
                       />
                     </div>
                     <div class="col-md-6">
                       <label for="citaHora" class="form-label">Horario</label>
-                      <select class="form-select" id="citaHora" required>
+                      <select class="form-select" id="citaHora" name="hora" required>
                         <option value="" selected disabled>
                           Selecciona horario
                         </option>
@@ -107,6 +119,7 @@
                     <textarea
                       class="form-control"
                       id="citaNotas"
+                      name="notas"
                       placeholder="S&iacute;ntomas, motivo de consulta o informaci&oacute;n relevante..."
                       rows="3"
                     ></textarea>
@@ -124,8 +137,8 @@
                     <button
                       class="btn btn-primary px-4"
                       type="button"
-                      data-bs-toggle="modal"
                       data-bs-target="#modalConfirmarCita"
+                      id="btnConfirmarCita"
                     >
                       Confirmar cita
                     </button>
@@ -179,8 +192,8 @@
               >
                 Cancelar
               </button>
-              <a href="/reservas" th:href="@{/reservas}" class="btn btn-primary"
-                >S&iacute;, agendar cita</a
+              <button type="submit" form="formReservaCita" class="btn btn-primary"
+                >S&iacute;, agendar cita</button
               >
             </div>
           </div>
@@ -189,6 +202,8 @@
     </th:block>
 
     <th:block id="cssExtra"></th:block>
-    <th:block id="jsExtra"></th:block>
+    <th:block id="jsExtra">
+      <script src="/js/citas-form.js" th:src="@{/js/citas-form.js}"></script>
+    </th:block>
   </body>
 </html>
