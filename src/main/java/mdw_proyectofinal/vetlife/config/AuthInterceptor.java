@@ -18,7 +18,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         HttpSession sesion = request.getSession(false);
 
         boolean esRutaAdmin = ruta.startsWith("/admin");
-        boolean esRutaUsuario = ruta.equals("/perfil") || ruta.equals("/mascota");
+        boolean esRutaUsuario = ruta.equals("/perfil") || ruta.equals("/mascota") || ruta.equals("/reservas");
 
         if (!esRutaAdmin && !esRutaUsuario) {
             return true;

@@ -4,7 +4,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import jakarta.servlet.http.HttpSession;
 import mdw_proyectofinal.vetlife.repository.ServicioRepository;
+import mdw_proyectofinal.vetlife.service.AuthService;
 
 @Controller
 public class PageController {
@@ -33,7 +35,10 @@ public class PageController {
     }
 
     @GetMapping("/citas")
-    public String citas(Model modelo) {
+    public String citas(Model modelo, HttpSession sesion) {
+        if (sesion == null || sesion.getAttribute(AuthService.SESION_ROL) == null) {
+            return "users/citas-restringida";
+        }
         modelo.addAttribute("servicios", servicioRepository.listarActivos());
         return "users/citas";
     }

@@ -116,6 +116,13 @@ a:hover {
   height: 2.25rem;
 }
 
+.avatar-usuario {
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  font-size: 0.95rem;
+}
+
 .ancho-contenido-citas {
   max-width: 72rem;
 }

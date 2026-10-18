@@ -1,130 +1,194 @@
-<!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org"
-    th:replace="~{fragments/base :: pagina('Reservar cita', 'citas', ~{:: #contenido}, ~{:: #cssExtra}, ~{:: #jsExtra})}">
-
-<body>
+<!doctype html>
+<html
+  lang="es"
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{fragments/base :: pagina('Reservar cita', 'citas', ~{:: #contenido}, ~{:: #cssExtra}, ~{:: #jsExtra})}"
+>
+  <body>
     <th:block id="contenido">
-        <main class="container py-5 ancho-contenido-citas">
-            <header class="text-center mb-5">
-                <p class="text-uppercase small fw-semibold text-primary mb-2">
-                    Reserva online
-                </p>
-                <h1 class="display-6 font-heading">
-                    Agenda la atenci&oacute;n de tu mascota
-                </h1>
-                <p class="text-secondary mb-0">
-                    Selecciona servicio, mascota, fecha y un horario disponible.
-                </p>
-            </header>
+      <main class="container py-5 ancho-contenido-citas">
+        <header class="text-center mb-5">
+          <p class="text-uppercase small fw-semibold text-primary mb-2">
+            Reserva online
+          </p>
+          <h1 class="display-6 font-heading">
+            Agenda la atenci&oacute;n de tu mascota
+          </h1>
+          <p class="text-secondary mb-0">
+            Selecciona servicio, mascota, fecha y un horario disponible.
+          </p>
+        </header>
 
-            <div class="alert alert-light border d-flex align-items-center gap-3 mb-4 ancho-contenido-citas mx-auto" role="status">
-                <span class="rounded-circle bg-primary-subtle text-primary d-inline-flex align-items-center justify-content-center fw-bold" style="width:2.5rem;height:2.5rem;">M</span>
-                <div>
-                    <strong class="d-block">Mar&iacute;a Gonz&aacute;lez</strong>
-                    <span class="small text-secondary">maria.gonzalez@vetlife.com &middot; DNI 12345678 &middot; +51 900 111 223</span>
-                </div>
-                <span class="badge text-bg-primary ms-auto">Usuario de prueba</span>
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="card shadow-sm border-0 rounded-3">
+              <div class="card-body p-4 p-lg-5">
+                <form id="formReservaCita">
+                  <div class="mb-4">
+                    <label
+                      for="selectServicio"
+                      class="form-label font-heading h5"
+                      >Servicio</label
+                    >
+                    <p class="small text-secondary mb-2">
+                      Selecciona la atenci&oacute;n que tu mascota necesitas.
+                    </p>
+                    <select class="form-select" id="selectServicio" required>
+                      <option value="" selected disabled>
+                        Selecciona un servicio
+                      </option>
+                      <option
+                        th:each="servicio : ${servicios}"
+                        th:value="${servicio.id}"
+                        th:text="${servicio.nombre} + ' - S/ ' + ${#numbers.formatDecimal(servicio.precio, 1, 'POINT', 2, 'POINT')}"
+                      >
+                        Laparoscop&iacute;a - S/ 180.00
+                      </option>
+                    </select>
+                  </div>
+
+                  <div class="mb-4">
+                    <label
+                      for="selectMascota"
+                      class="form-label font-heading h5"
+                      >Mascota</label
+                    >
+                    <p class="small text-secondary mb-2">
+                      Elige una mascota de tu cuenta.
+                    </p>
+                    <select class="form-select" id="selectMascota" required>
+                      <option value="" selected disabled>
+                        Seleccione su mascota
+                      </option>
+                      <option value="101">Doggy (Perrito - Caniche)</option>
+                      <option value="102">Michi (Gato - Siam&eacute;s)</option>
+                    </select>
+                    <a
+                      class="small text-primary d-inline-block mt-2 text-decoration-none"
+                      href="/mascota?from=cita"
+                      th:href="@{/mascota(from='cita')}"
+                    >
+                      Registrar otra mascota
+                    </a>
+                  </div>
+
+                  <hr class="my-4" />
+
+                  <h2 class="h5 font-heading mb-3">Fecha y horario</h2>
+                  <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                      <label for="citaFecha" class="form-label">Fecha</label>
+                      <input
+                        class="form-control"
+                        id="citaFecha"
+                        type="date"
+                        required
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <label for="citaHora" class="form-label">Horario</label>
+                      <select class="form-select" id="citaHora" required>
+                        <option value="" selected disabled>
+                          Selecciona horario
+                        </option>
+                        <option value="09:00">09:00 AM</option>
+                        <option value="10:30">10:30 AM</option>
+                        <option value="14:00">02:00 PM</option>
+                        <option value="16:00">04:00 PM</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="mb-4">
+                    <label for="citaNotas" class="form-label">
+                      Notas adicionales
+                      <span class="fw-normal text-secondary">(opcional)</span>
+                    </label>
+                    <textarea
+                      class="form-control"
+                      id="citaNotas"
+                      placeholder="S&iacute;ntomas, motivo de consulta o informaci&oacute;n relevante..."
+                      rows="3"
+                    ></textarea>
+                  </div>
+
+                  <div
+                    class="bg-primary-subtle rounded-3 p-3 mt-4 d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center"
+                  >
+                    <div>
+                      <strong class="small d-block text-dark">Resumen</strong>
+                      <span class="small text-secondary"
+                        >Completa las opciones para confirmar.</span
+                      >
+                    </div>
+                    <button
+                      class="btn btn-primary px-4"
+                      type="button"
+                      data-bs-toggle="modal"
+                      data-bs-target="#modalConfirmarCita"
+                    >
+                      Confirmar cita
+                    </button>
+                  </div>
+                </form>
+              </div>
             </div>
-
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="card shadow-sm border-0 rounded-3">
-                        <div class="card-body p-4 p-lg-5">
-                            <form id="formReservaCita">
-
-                                <div class="mb-4">
-                                    <label for="selectServicio" class="form-label font-heading h5">Servicio</label>
-                                    <p class="small text-secondary mb-2">Selecciona la atenci&oacute;n que tu mascota necesitas.</p>
-                                    <select class="form-select" id="selectServicio" required>
-                                        <option value="" selected disabled>Selecciona un servicio</option>
-                                        <option th:each="servicio : ${servicios}" th:value="${servicio.id}"
-                                            th:text="${servicio.nombre} + ' - S/ ' + ${#numbers.formatDecimal(servicio.precio, 1, 'POINT', 2, 'POINT')}">Laparoscop&iacute;a - S/ 180.00</option>
-                                    </select>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="selectMascota" class="form-label font-heading h5">Mascota</label>
-                                    <p class="small text-secondary mb-2">Elige una mascota de tu cuenta.</p>
-                                    <select class="form-select" id="selectMascota" required>
-                                        <option value="" selected disabled>Seleccione su mascota</option>
-                                        <option value="101">Doggy (Perrito - Caniche)</option>
-                                        <option value="102">Michi (Gato - Siam&eacute;s)</option>
-                                    </select>
-                                    <a class="small text-primary d-inline-block mt-2 text-decoration-none"
-                                        href="/mascota?from=cita" th:href="@{/mascota(from='cita')}">
-                                        Registrar otra mascota
-                                    </a>
-                                </div>
-
-                                <hr class="my-4" />
-
-                                <h2 class="h5 font-heading mb-3">Fecha y horario</h2>
-                                <div class="row g-3 mb-4">
-                                    <div class="col-md-6">
-                                        <label for="citaFecha" class="form-label">Fecha</label>
-                                        <input class="form-control" id="citaFecha" type="date" required />
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="citaHora" class="form-label">Horario</label>
-                                        <select class="form-select" id="citaHora" required>
-                                            <option value="" selected disabled>Selecciona horario</option>
-                                            <option value="09:00">09:00 AM</option>
-                                            <option value="10:30">10:30 AM</option>
-                                            <option value="14:00">02:00 PM</option>
-                                            <option value="16:00">04:00 PM</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="mb-4">
-                                    <label for="citaNotas" class="form-label">
-                                        Notas adicionales <span class="fw-normal text-secondary">(opcional)</span>
-                                    </label>
-                                    <textarea class="form-control" id="citaNotas" placeholder="S&iacute;ntomas, motivo de consulta o informaci&oacute;n relevante..." rows="3"></textarea>
-                                </div>
-
-                                <div class="bg-primary-subtle rounded-3 p-3 mt-4 d-flex flex-column flex-md-row justify-content-between gap-3 align-items-md-center">
-                                    <div>
-                                        <strong class="small d-block text-dark">Resumen</strong>
-                                        <span class="small text-secondary">Completa las opciones para confirmar.</span>
-                                    </div>
-                                    <button class="btn btn-primary px-4" type="button" data-bs-toggle="modal" data-bs-target="#modalConfirmarCita">
-                                        Confirmar cita
-                                    </button>
-                                </div>
-
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </main>
-
-        <div class="modal fade" id="modalConfirmarCita" tabindex="-1" aria-labelledby="modalConfirmarLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header bg-primary text-white">
-                        <h5 class="modal-title font-heading" id="modalConfirmarLabel">Confirmar solicitud de cita</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="text-secondary">&iquest;Deseas enviar la solicitud de reserva para tu mascota?</p>
-                        <ul class="list-group list-group-flush mb-2 small">
-                            <li class="list-group-item"><strong>Lugar:</strong> VetLife - Piura</li>
-                            <li class="list-group-item"><strong>Atenci&oacute;n:</strong> Consulta m&eacute;dica veterinaria</li>
-                        </ul>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <a href="/reservas" th:href="@{/reservas}" class="btn btn-primary">S&iacute;, agendar cita</a>
-                    </div>
-                </div>
-            </div>
+          </div>
         </div>
+      </main>
+
+      <div
+        class="modal fade"
+        id="modalConfirmarCita"
+        tabindex="-1"
+        aria-labelledby="modalConfirmarLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+              <h5 class="modal-title font-heading" id="modalConfirmarLabel">
+                Confirmar solicitud de cita
+              </h5>
+              <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="modal"
+                aria-label="Cerrar"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <p class="text-secondary">
+                &iquest;Deseas enviar la solicitud de reserva para tu mascota?
+              </p>
+              <ul class="list-group list-group-flush mb-2 small">
+                <li class="list-group-item">
+                  <strong>Lugar:</strong> VetLife - Piura
+                </li>
+                <li class="list-group-item">
+                  <strong>Atenci&oacute;n:</strong> Consulta m&eacute;dica
+                  veterinaria
+                </li>
+              </ul>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-outline-secondary"
+                data-bs-dismiss="modal"
+              >
+                Cancelar
+              </button>
+              <a href="/reservas" th:href="@{/reservas}" class="btn btn-primary"
+                >S&iacute;, agendar cita</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
     </th:block>
 
     <th:block id="cssExtra"></th:block>
     <th:block id="jsExtra"></th:block>
-</body>
-
+  </body>
 </html>
