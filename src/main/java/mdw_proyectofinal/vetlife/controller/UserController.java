@@ -1,140 +1,112 @@
 package mdw_proyectofinal.vetlife.controller;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
-import mdw_proyectofinal.vetlife.model.Cita;
-import mdw_proyectofinal.vetlife.model.Mascota;
-import mdw_proyectofinal.vetlife.model.Servicio;
 import mdw_proyectofinal.vetlife.model.Usuario;
-import mdw_proyectofinal.vetlife.repository.CitaRepository;
-import mdw_proyectofinal.vetlife.repository.MascotaRepository;
-import mdw_proyectofinal.vetlife.repository.ServicioRepository;
-import mdw_proyectofinal.vetlife.service.SesionService;
+import mdw_proyectofinal.vetlife.repository.UsuarioRepository;
+import mdw_proyectofinal.vetlife.service.AuthService;
+import mdw_proyectofinal.vetlife.service.CitaService;
+import mdw_proyectofinal.vetlife.service.MascotaService;
 
 @Controller
 public class UserController {
 
-    private final ServicioRepository servicioRepository;
-    private final MascotaRepository mascotaRepository;
-    private final CitaRepository citaRepository;
-    private final SesionService sesionService;
+    private final UsuarioRepository usuarioRepository;
+    private final MascotaService mascotaService;
+    private final CitaService citaService;
 
-    public UserController(ServicioRepository servicioRepository, MascotaRepository mascotaRepository,
-            CitaRepository citaRepository, SesionService sesionService) {
-        this.servicioRepository = servicioRepository;
-        this.mascotaRepository = mascotaRepository;
-        this.citaRepository = citaRepository;
-        this.sesionService = sesionService;
-    }
-
-    @GetMapping("/reservas")
-    public String reservas() {
-        return "users/reservas";
+    public UserController(UsuarioRepository usuarioRepository, MascotaService mascotaService, CitaService citaService) {
+        this.usuarioRepository = usuarioRepository;
+        this.mascotaService = mascotaService;
+        this.citaService = citaService;
     }
 
     @GetMapping("/perfil")
-    public String mostrarPerfil(Model model) {
-        model.addAttribute("nombreUsuario", "Grisel");
+    public String perfil(HttpSession sesion, Model modelo) {
+        Integer usuarioId = (Integer) sesion.getAttribute(AuthService.SESION_USUARIO_ID);
+        Usuario usuario = usuarioRepository.buscarPorId(usuarioId).orElse(null);
+        modelo.addAttribute("usuario", usuario);
+        modelo.addAttribute("mascotas", mascotaService.listarPorDuenio(usuarioId));
         return "users/perfil";
     }
 
+    @PostMapping("/perfil")
+    public String actualizarPerfil(@RequestParam String nombre,
+            @RequestParam String apellido,
+            @RequestParam String dni,
+            @RequestParam String telefono,
+            @RequestParam String correo,
+            HttpSession sesion,
+            RedirectAttributes redirectAttributes) {
+        Integer usuarioId = (Integer) sesion.getAttribute(AuthService.SESION_USUARIO_ID);
+        usuarioRepository.actualizar(usuarioId, nombre.trim(), apellido.trim(), dni.trim(), telefono.trim(),
+                correo.trim());
+        sesion.setAttribute(AuthService.SESION_NOMBRE, nombre.trim());
+        sesion.setAttribute(AuthService.SESION_CORREO, correo.trim());
+        redirectAttributes.addFlashAttribute("mensaje", "Perfil actualizado correctamente.");
+        return "redirect:/perfil";
+    }
+
     @GetMapping("/mascota")
-    public String verMascota(Model model) {
-        model.addAttribute("nombreMascota", "Fido");
+    public String mascota(@RequestParam(required = false) String from,
+            @RequestParam(required = false) String error,
+            Model modelo) {
+        modelo.addAttribute("error", error);
         return "users/mascota";
     }
 
-    // Controladores Citas / Servicios (Ticket de Brayan): inicio
-
-    @GetMapping("/citas")
-    public String citas(Model model, HttpSession sesion) {
-        model.addAttribute("usuario", sesionService.obtenerOCrear(sesion));
-        model.addAttribute("servicios", servicioRepository.findAllActivos());
-        model.addAttribute("mascotas", mascotaRepository.findAll());
-        model.addAttribute("fechaHoy", LocalDate.now().toString());
-        model.addAttribute("horarios", generarHorarios());
-        return "users/citas";
+    @PostMapping("/mascota")
+    public String registrarMascota(@RequestParam String nombre,
+            @RequestParam(required = false) String especie,
+            @RequestParam(required = false) String raza,
+            @RequestParam(required = false) String edad,
+            @RequestParam(required = false) String sexo,
+            HttpSession sesion,
+            RedirectAttributes redirectAttributes) {
+        Integer usuarioId = (Integer) sesion.getAttribute(AuthService.SESION_USUARIO_ID);
+        String error = mascotaService.registrar(nombre, especie, raza, edad, sexo, usuarioId);
+        if (error != null) {
+            redirectAttributes.addAttribute("error", error);
+            return "redirect:/mascota";
+        }
+        redirectAttributes.addFlashAttribute("mensaje", "Mascota registrada correctamente.");
+        return "redirect:/perfil";
     }
 
     @PostMapping("/citas")
-    public String reservarCita(@RequestParam String servicioId, @RequestParam String mascotaId,
-            @RequestParam String fecha, @RequestParam String hora,
-            @RequestParam(required = false) String notas, HttpSession sesion) {
-        Usuario usuario = sesionService.obtenerOCrear(sesion);
+    public String reservarCita(@RequestParam String servicioId,
+            @RequestParam String mascotaId,
+            @RequestParam String fecha,
+            @RequestParam String hora,
+            @RequestParam(required = false) String notas,
+            HttpSession sesion,
+            RedirectAttributes redirectAttributes) {
+        Integer usuarioId = (Integer) sesion.getAttribute(AuthService.SESION_USUARIO_ID);
+        if (usuarioId == null) {
+            return "redirect:/login";
+        }
 
-        Servicio servicio = servicioRepository.findById(servicioId).orElse(null);
-        Mascota mascota = mascotaRepository.findById(mascotaId).orElse(null);
+        int mascotaIdNum;
+        try {
+            mascotaIdNum = Integer.parseInt(mascotaId.trim());
+        } catch (NumberFormatException e) {
+            redirectAttributes.addFlashAttribute("error", "Selecciona una mascota válida.");
+            return "redirect:/citas";
+        }
 
-        Cita cita = new Cita();
-        cita.setServicio(servicio != null ? servicio.getNombre() : servicioId);
-        cita.setMascotaId(mascota != null ? mascota.getId() : mascotaId);
-        cita.setMascotaNombre(mascota != null ? mascota.getNombre() : "");
-        cita.setFecha(fecha);
-        cita.setHora(hora);
-        cita.setNotas(notas);
-        cita.setUsuarioCorreo(usuario != null ? usuario.getCorreo() : null);
-        cita.setEstado("pendiente");
-        citaRepository.save(cita);
+        String error = citaService.reservar(servicioId, mascotaIdNum, fecha, hora, notas, usuarioId);
+        if (error != null) {
+            redirectAttributes.addFlashAttribute("error", error);
+            return "redirect:/citas";
+        }
 
+        redirectAttributes.addFlashAttribute("mensaje", "Cita reservada correctamente. Te esperamos.");
         return "redirect:/reservas";
     }
-
-    @GetMapping("/servicios")
-    public String servicios(Model model, HttpSession sesion) {
-        model.addAttribute("usuario", sesionService.obtenerOCrear(sesion));
-        model.addAttribute("categorias", agruparPorCategoria(servicioRepository.findAllActivos()));
-        return "users/servicios";
-    }
-
-    @PostMapping("/logout")
-    public String cerrarSesion(HttpSession sesion) {
-        sesionService.cerrar(sesion);
-        return "redirect:/";
-    }
-
-    private List<HorarioDisponible> generarHorarios() {
-        List<HorarioDisponible> horarios = new ArrayList<>();
-        LocalTime inicio = LocalTime.of(8, 0);
-        LocalTime fin = LocalTime.of(17, 30);
-        DateTimeFormatter formatoValor = DateTimeFormatter.ofPattern("HH:mm", Locale.ROOT);
-        DateTimeFormatter formatoEtiqueta = DateTimeFormatter.ofPattern("hh:mm a", Locale.ROOT);
-
-        for (LocalTime hora = inicio; !hora.isAfter(fin); hora = hora.plusMinutes(30)) {
-            horarios.add(new HorarioDisponible(hora.format(formatoValor), hora.format(formatoEtiqueta)));
-        }
-        return horarios;
-    }
-
-    private List<CategoriaServicio> agruparPorCategoria(List<Servicio> servicios) {
-        Map<String, List<Servicio>> porCategoria = new LinkedHashMap<>();
-        for (Servicio servicio : servicios) {
-            porCategoria.computeIfAbsent(servicio.getCategoria(), clave -> new ArrayList<>()).add(servicio);
-        }
-
-        List<CategoriaServicio> categorias = new ArrayList<>();
-        porCategoria.forEach((nombre, lista) -> categorias.add(new CategoriaServicio(nombre, lista)));
-        return categorias;
-    }
-
-    public record HorarioDisponible(String valor, String etiqueta) {
-    }
-
-    public record CategoriaServicio(String nombre, List<Servicio> servicios) {
-    }
-
-    // Fin Controladores Citas / Servicios (Ticket de Brayan)
 }

@@ -1,22 +1,9 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{fragments/base :: pagina('Inicio', 'inicio', ~{:: #contenido}, ~{:: #cssExtra}, ~{:: #jsExtra})}">
 
-<head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <meta content="VetLife, cl&iacute;nica veterinaria y gesti&oacute;n de citas para mascotas." name="description" />
-    <title>
-        Inicio | VetLife
-    </title>
-    <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" rel="stylesheet" />
-    <link th:href="@{/assets/css/estilos.css}" href="/assets/css/estilos.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-</head>
-
-<body data-pagina="inicio">
-    <div th:replace="~{fragments/navbar :: navbar}"></div>
-    <main>
+<body>
+    <th:block id="contenido">
         <section class="bg-primary-subtle bg-opacity-25 py-5 py-lg-5">
             <div class="container py-lg-4">
                 <div class="row align-items-center g-5">
@@ -35,10 +22,11 @@
                             reservas digitales en un solo lugar.
                         </p>
                         <div class="d-flex flex-wrap gap-2">
-                            <a class="btn btn-primary btn-lg" th:href="@{/citas}" href="/citas">
+                            <a class="btn btn-primary btn-lg" href="/citas" th:href="@{/citas}">
                                 Reservar cita
                             </a>
-                            <a class="btn btn-outline-primary btn-lg" th:href="@{/servicios}" href="/servicios">
+                            <a class="btn btn-outline-primary btn-lg" href="/servicios"
+                                th:href="@{/servicios}">
                                 Ver servicios
                             </a>
                         </div>
@@ -72,7 +60,7 @@
                     <div class="col-lg-6">
                         <div class="card shadow-sm overflow-hidden border-0">
                             <img alt="Veterinario atendiendo a una mascota" class="img-fluid hero-imagen w-100"
-                                th:src="@{/assets/img/veterinario.jpg}" src="/assets/img/veterinario.jpg" />
+                                src="/img/veterinario.jpg" th:src="@{/img/veterinario.jpg}" />
                         </div>
                     </div>
                 </div>
@@ -92,9 +80,20 @@
                 </p>
             </div>
             <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-4" id="serviciosInicio">
+                <div class="col" th:each="servicio : ${serviciosInicio}">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body p-4">
+                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-3" style="width:48px;height:48px;">
+                                <i class="bi fs-4" th:classappend="${servicio.icono}"></i>
+                            </div>
+                            <h3 class="h6" th:text="${servicio.nombre}">Laparoscop&iacute;a</h3>
+                            <p class="small text-secondary mb-0" th:text="${servicio.categoria}">Cirug&iacute;a</p>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="text-center mt-4">
-                <a class="btn btn-outline-primary" th:href="@{/servicios}" href="/servicios">
+                <a class="btn btn-outline-primary" href="/servicios" th:href="@{/servicios}">
                     Ver todos los servicios
                 </a>
             </div>
@@ -110,6 +109,33 @@
                     </h2>
                 </div>
                 <div class="row g-4" id="pasosInicio">
+                    <div class="col-md-4">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body p-4">
+                                <span class="badge bg-primary-subtle text-primary mb-3">01</span>
+                                <h3 class="h5">Crea tu cuenta</h3>
+                                <p class="small text-secondary mb-0">Registra tus datos de contacto para que podamos identificar tus reservas.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body p-4">
+                                <span class="badge bg-primary-subtle text-primary mb-3">02</span>
+                                <h3 class="h5">Registra a tu mascota</h3>
+                                <p class="small text-secondary mb-0">Guarda los datos b&aacute;sicos de tu compañero para agilizar la atenci&oacute;n.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card shadow-sm h-100">
+                            <div class="card-body p-4">
+                                <span class="badge bg-primary-subtle text-primary mb-3">03</span>
+                                <h3 class="h5">Reserva tu cita</h3>
+                                <p class="small text-secondary mb-0">Selecciona servicio, mascota, fecha y horario disponible.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -117,7 +143,7 @@
             <div class="row align-items-center g-5">
                 <div class="col-lg-6">
                     <img alt="Mascota recibiendo atenci&oacute;n y cuidado" class="img-fluid rounded-4 shadow-sm"
-                        th:src="@{/assets/img/hero.jpg}" src="/assets/img/hero.jpg" />
+                        src="/img/hero.jpg" th:src="@{/img/hero.jpg}" />
                 </div>
                 <div class="col-lg-6">
                     <p class="text-uppercase small fw-semibold text-primary mb-2">
@@ -153,18 +179,10 @@
                 </div>
             </div>
         </section>
-    </main>
-    <div th:replace="~{fragments/footer :: footer}"></div>
-    <div class="position-fixed end-0 bottom-0 m-3" id="contenedorToast">
-    </div>
-    <script crossorigin="anonymous" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">
-        </script>
-    <script th:src="@{/assets/js/utilidades.js}" src="/assets/js/utilidades.js"></script>
-    <script th:src="@{/assets/js/datos.js}" src="/assets/js/datos.js"></script>
-    <script th:src="@{/assets/js/autenticacion.js}" src="/assets/js/autenticacion.js"></script>
-    <script th:src="@{/assets/js/servicios.js}" src="/assets/js/servicios.js"></script>
-    <script th:src="@{/assets/js/app.js}" src="/assets/js/app.js"></script>
+    </th:block>
+
+    <th:block id="cssExtra"></th:block>
+    <th:block id="jsExtra"></th:block>
 </body>
 
 </html>

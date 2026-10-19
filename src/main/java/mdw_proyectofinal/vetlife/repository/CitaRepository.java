@@ -7,25 +7,21 @@ import org.springframework.stereotype.Repository;
 
 import mdw_proyectofinal.vetlife.model.Cita;
 
-// Ticket de Brayan: repository en memoria de citas
 @Repository
 public class CitaRepository {
 
     private final List<Cita> citas = new ArrayList<>();
 
-    public List<Cita> findAll() {
-        return new ArrayList<>(citas);
-    }
-
-    public Cita save(Cita cita) {
-        if (cita.getId() == null || cita.getId().isBlank()) {
-            cita.setId("C-" + System.currentTimeMillis());
-        }
-        if (cita.getEstado() == null || cita.getEstado().isBlank()) {
-            cita.setEstado("pendiente");
-        }
+    public Cita guardar(Cita cita) {
+        cita.setId("C-" + System.currentTimeMillis());
+        cita.setEstado("pendiente");
         citas.add(cita);
         return cita;
     }
+
+    public List<Cita> listarPorUsuario(int usuarioId) {
+        return citas.stream()
+                .filter(c -> c.getUsuarioId() == usuarioId)
+                .toList();
+    }
 }
-// Fin Ticket de Brayan

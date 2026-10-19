@@ -1,19 +1,31 @@
 package mdw_proyectofinal.vetlife.model;
 
-// Ticket de Brayan: model base de Cita
 public class Cita {
 
     private String id;
     private String servicio;
-    private String mascotaId;
+    private int mascotaId;
     private String mascotaNombre;
     private String fecha;
     private String hora;
     private String notas;
     private String estado;
-    private String usuarioCorreo;
+    private int usuarioId;
 
     public Cita() {
+    }
+
+    public Cita(String id, String servicio, int mascotaId, String mascotaNombre, String fecha, String hora,
+            String notas, String estado, int usuarioId) {
+        this.id = id;
+        this.servicio = servicio;
+        this.mascotaId = mascotaId;
+        this.mascotaNombre = mascotaNombre;
+        this.fecha = fecha;
+        this.hora = hora;
+        this.notas = notas;
+        this.estado = estado;
+        this.usuarioId = usuarioId;
     }
 
     public String getId() {
@@ -32,11 +44,11 @@ public class Cita {
         this.servicio = servicio;
     }
 
-    public String getMascotaId() {
+    public int getMascotaId() {
         return mascotaId;
     }
 
-    public void setMascotaId(String mascotaId) {
+    public void setMascotaId(int mascotaId) {
         this.mascotaId = mascotaId;
     }
 
@@ -80,12 +92,11 @@ public class Cita {
         this.estado = estado;
     }
 
-    public String getUsuarioCorreo() {
-        return usuarioCorreo;
+    public int getUsuarioId() {
+        return usuarioId;
     }
 
-    public void setUsuarioCorreo(String usuarioCorreo) {
-        this.usuarioCorreo = usuarioCorreo;
+    public void setUsuarioId(int usuarioId) {
+        this.usuarioId = usuarioId;
     }
 }
-// Fin Ticket de Brayan

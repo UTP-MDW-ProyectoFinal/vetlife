@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+    th:fragment="panel(titulo, paginaActiva, contenido, cssExtra, jsExtra)">
+
+    <head th:replace="~{fragments/base :: head(${titulo}, ${cssExtra})}" />
+
+    <body class="admin-fondo" th:attr="data-admin-pagina=${paginaActiva}">
+        <div class="d-flex admin-layout">
+            <aside class="admin-sidebar d-flex flex-column flex-shrink-0 p-3" id="barraLateralAdmin"
+                th:fragment="sidebar(paginaActiva)">
+                <a class="d-flex align-items-center gap-2 text-white mb-4" href="/admin"
+                    th:href="@{/admin}">
+                    <img alt="Logo de VetLifeRosa" class="img-fluid" src="/img/iconoR.jpeg"
+                        style="max-width: 120px;" th:src="@{/img/iconoR.jpeg}" />
+                </a>
+                <nav aria-label="Men&uacute; administrativo">
+                    <ul class="nav nav-pills flex-column gap-1">
+                        <li>
+                            <a class="nav-link d-flex align-items-center gap-2 px-3 py-2"
+                                data-pagina-nav="admin-dashboard"
+                                th:classappend="${paginaActiva == 'dashboard'} ? 'active' : ''"
+                                th:href="@{/admin}" href="/admin">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link d-flex align-items-center gap-2 px-3 py-2"
+                                data-pagina-nav="admin-citas"
+                                th:classappend="${paginaActiva == 'citas'} ? 'active' : ''"
+                                th:href="@{/admin/citas}" href="/admin/citas">
+                                Citas
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link d-flex align-items-center gap-2 px-3 py-2"
+                                data-pagina-nav="admin-pacientes"
+                                th:classappend="${paginaActiva == 'pacientes'} ? 'active' : ''"
+                                th:href="@{/admin/pacientes}" href="/admin/pacientes">
+                                Pacientes
+                            </a>
+                        </li>
+                        <li>
+                            <a class="nav-link d-flex align-items-center gap-2 px-3 py-2"
+                                data-pagina-nav="admin-servicios"
+                                th:classappend="${paginaActiva == 'servicios'} ? 'active' : ''"
+                                th:href="@{/admin/servicios}" href="/admin/servicios">
+                                Servicios
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
+            <div
+                class="position-fixed top-0 start-0 w-100 h-100 bg-dark bg-opacity-50 d-none superposicion-admin"
+                id="superposicionAdmin">
+            </div>
+            <div class="admin-contenido d-flex flex-column">
+                <header class="admin-barra d-flex align-items-center px-3 px-lg-4 sticky-top"
+                    th:fragment="barra">
+                    <button aria-label="Abrir men&uacute;" class="btn btn-light border d-md-none"
+                        id="botonMenuAdmin" type="button">
+                        Men&uacute;
+                    </button>
+
+                    <button aria-label="Sitio Web" class="btn btn-light border ms-auto" type="button">
+                        <a class="text-decoration-none" href="/" th:href="@{/}">Web</a>
+                    </button>
+
+                    <div class="d-flex align-items-center gap-2 ms-3">
+                        <span
+                            class="avatar-admin rounded-circle bg-primary-subtle text-primary d-inline-flex align-items-center justify-content-center fw-bold"
+                            th:text="${session != null and session.nombre != null ?
+                                #strings.substring(session.nombre, 0, 1) : 'DR'}">
+                            DR
+                        </span>
+
+                        <div class="d-none d-sm-block">
+                            <div class="small fw-semibold"
+                                th:text="${session != null and session.nombre != null ? session.nombre : 'Dra. Ram\u00edrez'}">
+                                Dra. Ram&iacute;rez
+                            </div>
+                            <div class="small text-secondary">Administrador</div>
+                        </div>
+
+                        <a class="btn btn-sm btn-outline-secondary ms-2" href="/logout" th:href="@{/logout}">
+                            Salir
+                        </a>
+                    </div>
+                </header>
+                <main class="container-fluid p-4 p-lg-5">
+                    <th:block th:insert="${contenido}" />
+                </main>
+            </div>
+        </div>
+        <div class="position-fixed end-0 bottom-0 m-3" id="contenedorToast">
+        </div>
+        <th:block th:replace="~{fragments/base :: scripts(${jsExtra})}" />
+    </body>
+
+</html>

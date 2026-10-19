@@ -1,32 +1,27 @@
 package mdw_proyectofinal.vetlife.model;
 
-import java.util.Locale;
-
-// Ticket de Brayan: model base de Servicio
 public class Servicio {
 
     private String id;
     private String nombre;
     private String categoria;
-    private int duracion;
+    private String duracion;
     private double precio;
-    private boolean activo;
     private String icono;
-    private String descripcion;
+    private boolean activo;
 
     public Servicio() {
+        this.activo = true;
     }
 
-    public Servicio(String id, String nombre, String categoria, int duracion, double precio, boolean activo,
-            String icono, String descripcion) {
+    public Servicio(String id, String nombre, String categoria, String duracion, double precio, String icono) {
         this.id = id;
         this.nombre = nombre;
         this.categoria = categoria;
         this.duracion = duracion;
         this.precio = precio;
-        this.activo = activo;
         this.icono = icono;
-        this.descripcion = descripcion;
+        this.activo = true;
     }
 
     public String getId() {
@@ -53,11 +48,11 @@ public class Servicio {
         this.categoria = categoria;
     }
 
-    public int getDuracion() {
+    public String getDuracion() {
         return duracion;
     }
 
-    public void setDuracion(int duracion) {
+    public void setDuracion(String duracion) {
         this.duracion = duracion;
     }
 
@@ -69,14 +64,6 @@ public class Servicio {
         this.precio = precio;
     }
 
-    public boolean isActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
-
     public String getIcono() {
         return icono;
     }
@@ -85,26 +72,11 @@ public class Servicio {
         this.icono = icono;
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public boolean isActivo() {
+        return activo;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public String getDuracionFormateada() {
-        if (duracion >= 1440) {
-            return Math.round(duracion / 1440.0) + " día(s)";
-        }
-        if (duracion >= 60) {
-            return Math.round(duracion / 60.0) + " h";
-        }
-        return duracion + " min";
-    }
-
-    public String getPrecioFormateado() {
-        return String.format(Locale.ROOT, "%.2f", precio);
+    public void setActivo(boolean activo) {
+        this.activo = activo;
     }
 }
-// Fin Ticket de Brayan

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+    th:replace="~{fragments/base :: pagina('Reservar cita', 'citas', ~{:: #contenido}, ~{:: #cssExtra}, ~{:: #jsExtra})}">
+
+<body>
+    <th:block id="contenido">
+        <main class="min-vh-100 d-flex align-items-center py-5">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-7">
+                        <div class="card border-0 shadow-sm rounded-3 text-center p-4 p-lg-5">
+                            <div class="card-body">
+                                <span class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary-subtle text-primary mb-4"
+                                    style="width: 4rem; height: 4rem;">
+                                    <i class="bi bi-lock fs-3" aria-hidden="true"></i>
+                                </span>
+                                <h1 class="h3 font-heading mb-3">
+                                    Necesitas iniciar sesi&oacute;n para ingresar
+                                </h1>
+                                <p class="text-secondary mb-4">
+                                    Para reservar una cita en VetLife primero debes tener una cuenta.
+                                    Inicia sesi&oacute;n o reg&iacute;strate para continuar.
+                                </p>
+                                <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                                    <a class="btn btn-primary px-4" href="/login" th:href="@{/login}">
+                                        Iniciar sesi&oacute;n
+                                    </a>
+                                    <a class="btn btn-outline-primary px-4" href="/registro" th:href="@{/registro}">
+                                        Registrarse
+                                    </a>
+                                </div>
+                                <p class="small text-secondary mt-4 mb-0">
+                                    &iquest;Ya tienes cuenta? Inicia sesi&oacute;n para acceder al formulario de reserva.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </th:block>
+
+    <th:block id="cssExtra"></th:block>
+    <th:block id="jsExtra"></th:block>
+</body>
+
+</html>

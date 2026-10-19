@@ -107,48 +107,6 @@ a:hover {
   background-color: #f6f0f5;
 }
 
-.login-pagina {
-  min-height: calc(100vh - 4.5rem);
-  background: var(--color-fondo);
-}
-
-.login-panel {
-  max-width: 52rem;
-  min-height: 33rem;
-  border: 1px solid rgba(36, 28, 36, 0.04);
-  border-radius: 0.45rem;
-  overflow: hidden;
-  box-shadow: 0 0.75rem 2.5rem rgba(36, 28, 36, 0.04);
-}
-
-.login-mensaje {
-  min-height: 100%;
-  padding: 3rem;
-  background: var(--color-principal);
-  color: #fff;
-}
-
-.login-formulario {
-  padding: 3rem;
-  background: rgba(255, 255, 255, 0.35);
-}
-
-.login-formulario .form-control {
-  min-height: 2.9rem;
-  background-color: transparent;
-}
-
-@media (max-width: 575.98px) {
-  .login-panel {
-    min-height: 0;
-  }
-
-  .login-mensaje,
-  .login-formulario {
-    padding: 2rem 1.5rem;
-  }
-}
-
 .superposicion-admin {
   z-index: 1040;
 }
@@ -158,9 +116,11 @@ a:hover {
   height: 2.25rem;
 }
 
-.detalle-panel {
-  position: sticky;
-  top: 5rem;
+.avatar-usuario {
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+  font-size: 0.95rem;
 }
 
 .ancho-contenido-citas {
@@ -169,14 +129,6 @@ a:hover {
 
 .ancho-texto {
   max-width: 42rem;
-}
-
-.ancho-buscador-citas {
-  max-width: 20rem;
-}
-
-.ancho-buscador-pacientes {
-  max-width: 22rem;
 }
 
 .form-control:focus,
@@ -192,11 +144,6 @@ a:hover {
 
 .form-label {
   font-weight: 600;
-}
-
-#zonaUsuario .dropdown-menu {
-  z-index: 1100;
-  min-width: 15rem;
 }
 
 @media (max-width: 767.98px) {
