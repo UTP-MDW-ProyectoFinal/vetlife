@@ -3,14 +3,7 @@ package mdw_proyectofinal.vetlife.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 
-/**
- * Cuerpo del PATCH /api/v1/admin/perfil (P6).
- * Todos los campos son opcionales: solo se aplican y validan los que llegan
- * (regla de la seccion 5.5 de la guia: @Size/@Email aceptan null).
- *
- * IMPORTANTE: el DTO deliberadamente NO incluye username ni id, porque el perfil
- * del admin no permite cambiarlos (asi nadie se renombra a adam).
- */
+/** Cuerpo del PATCH /api/v1/admin/perfil: campos opcionales, no permite cambiar username ni id. */
 public class ActualizarAdminDTO {
 
     @Size(min = 1, max = 60, message = "El nombre debe tener entre 1 y 60 caracteres")

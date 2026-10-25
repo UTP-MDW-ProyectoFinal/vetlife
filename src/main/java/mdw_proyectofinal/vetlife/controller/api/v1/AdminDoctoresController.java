@@ -27,15 +27,7 @@ import mdw_proyectofinal.vetlife.model.api.v1.Especialidad;
 import mdw_proyectofinal.vetlife.service.api.v1.AdminPerfilService;
 import mdw_proyectofinal.vetlife.service.api.v1.DoctorService;
 
-/**
- * Coleccion de doctores (P6): GET y POST /api/v1/admin/doctores.
- * El GET del detalle (/api/v1/admin/doctores/{id}) y las consultas cruzadas
- * corresponden a P5, no a este controller.
- *
- * GET: lo usa cualquier admin autenticado.
- * POST: solo el admin con id 1 (Adam, constante ADAM_ID de la guia).
- * Codigos: listado 200, 401, 403; alta 201 + Location, 400, 401, 403, 404, 409.
- */
+/** GET y POST /api/v1/admin/doctores (P6). El POST solo lo permite el admin con id 1. */
 @RestController
 @RequestMapping(ApiVersion.BASE_PATH + "/admin")
 public class AdminDoctoresController {
@@ -92,15 +84,12 @@ public class AdminDoctoresController {
             @Valid @RequestBody DoctorRegistroDTO dto,
             BindingResult result) {
 
-        // Auth primero (401) y validacion de credenciales antes de exponer
-        // cualquier detalle del cuerpo de la peticion.
         Optional<Admin> admin = adminPerfilService.autenticar(email, password);
         if (admin.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Credenciales ausentes o incorrectas");
         }
 
-        // Solo Adam (id 1) puede crear doctores (403 antes de 400/404/409).
         if (admin.get().getId() != AdminPerfilService.ADAM_ID) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body("Solo el admin principal (id 1) puede registrar doctores");

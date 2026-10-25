@@ -7,10 +7,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 
-/**
- * Cuerpo del POST /api/v1/admin/doctores (P6), que en la guia se llama
- * DoctorRequest. Validaciones de la seccion 12 de la guia.
- */
+/** Cuerpo del POST /api/v1/admin/doctores. */
 public class DoctorRegistroDTO {
 
     @NotBlank(message = "El nombre del doctor es obligatorio")
@@ -30,7 +27,6 @@ public class DoctorRegistroDTO {
     @Size(max = 120, message = "El email no puede exceder 120 caracteres")
     private String email;
 
-    /** Opcional: de 7 a 15 digitos (regla del equipo). */
     @Pattern(regexp = "[0-9]{7,15}", message = "El telefono debe tener de 7 a 15 digitos")
     private String telefono;
 

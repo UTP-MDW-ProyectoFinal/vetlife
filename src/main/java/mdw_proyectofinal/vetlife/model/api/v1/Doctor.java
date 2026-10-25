@@ -11,11 +11,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
-/**
- * Doctor de la veterinaria (P6). Tabla doctor.
- * Los doctores NO son usuarios del sistema (son filas propias, guia seccion 1 y 5.2).
- * Reglas de la base: email y numero_licencia unicos; todo doctor se crea activo (true).
- */
+/** Doctor de la veterinaria, con su especialidad y licencia unica (P6). */
 @Entity
 @Table(name = "doctor", uniqueConstraints = {
         @UniqueConstraint(columnNames = "email"),
@@ -27,7 +23,6 @@ public class Doctor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // FK a especialidad (tabla de catalogo). LAZY como marca la guia.
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "especialidad_id", nullable = false)
     private Especialidad especialidad;

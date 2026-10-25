@@ -23,14 +23,7 @@ import mdw_proyectofinal.vetlife.model.Admin;
 import mdw_proyectofinal.vetlife.service.api.v1.AdminPerfilService;
 import mdw_proyectofinal.vetlife.utils.EncryptPassword;
 
-/**
- * Perfil del admin (P6): GET y PATCH /api/v1/admin/perfil.
- *
- * Cualquier admin autenticado opera sobre su propio perfil (Adam incluido):
- * la guia lo marca asu para que cada admin use su perfil, sin @SoloAdam.
- * Credenciales via headers email/password (patron api/v1 actual).
- * Codigos: 200, 400, 401, 403, 409.
- */
+/** GET y PATCH /api/v1/admin/perfil: cada admin opera sobre su propio perfil (P6). */
 @RestController
 @RequestMapping(ApiVersion.BASE_PATH + "/admin")
 public class AdminPerfilController {
@@ -58,7 +51,6 @@ public class AdminPerfilController {
             @Valid @RequestBody ActualizarAdminDTO dto,
             BindingResult result) {
 
-        // Auth primero: sin credenciales validas no se procesa el cuerpo.
         Optional<Admin> admin = adminPerfilService.autenticar(email, password);
         if (admin.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)

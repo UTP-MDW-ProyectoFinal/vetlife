@@ -13,12 +13,7 @@ import mdw_proyectofinal.vetlife.model.api.v1.Especialidad;
 import mdw_proyectofinal.vetlife.repository.api.v1.DoctorRepository;
 import mdw_proyectofinal.vetlife.repository.api.v1.EspecialidadRepository;
 
-/**
- * Servicio de la coleccion de doctores (P6): listado con filtros y alta.
- * El controller no toca repositorios (regla 7 de la guia): pasa por aqui.
- * Los metodos que leen la especialidad LAZY van dentro de @Transactional
- * porque open-in-view esta desactivado.
- */
+/** Logica de listado con filtros y alta de doctores (P6). */
 @Service
 public class DoctorService {
 
@@ -50,7 +45,6 @@ public class DoctorService {
         return doctorRepository.existsByNumeroLicencia(numeroLicencia);
     }
 
-    /** Construye el Doctor del DTO: email en minusculas y activo = true siempre. */
     public Doctor construirDoctor(DoctorRegistroDTO dto, Especialidad especialidad) {
         Doctor doctor = new Doctor();
         doctor.setEspecialidad(especialidad);
@@ -68,10 +62,6 @@ public class DoctorService {
         return aRespuesta(doctorRepository.save(doctor));
     }
 
-    /**
-     * Mapea a la respuesta DENTRO de la transaccion (la especialidad es LAZY
-     * y open-in-view esta desactivado).
-     */
     private DoctorResponse aRespuesta(Doctor doctor) {
         return new DoctorResponse(
                 doctor.getId(),

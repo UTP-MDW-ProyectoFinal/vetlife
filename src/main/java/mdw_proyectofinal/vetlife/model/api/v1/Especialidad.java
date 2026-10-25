@@ -6,16 +6,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
-/**
- * Catalogo de especialidades medicas (P6). Tabla especialidad.
- * Semillas: Medicina general, Cirugia, Dermatologia, Cardiologia (ids 1 a 4).
- */
+/** Especialidad medica de la veterinaria (catalogo de P6). */
 @Entity
-@Table(name = "especialidad", uniqueConstraints = @jakarta.persistence.UniqueConstraint(columnNames = "nombre"))
+@Table(name = "especialidad", uniqueConstraints = @UniqueConstraint(columnNames = "nombre"))
 public class Especialidad {
 
-    /** Id Integer por ser tabla de catalogo (regla del equipo, seccion 5.2 de la guia). */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;

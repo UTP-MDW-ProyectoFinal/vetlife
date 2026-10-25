@@ -8,27 +8,17 @@ import org.springframework.data.repository.query.Param;
 
 import mdw_proyectofinal.vetlife.model.api.v1.Doctor;
 
-/**
- * Repositorio JPA de Doctor (P6).
- * Contrato de la guia (seccion 5.3): findById, findAll, existsByEmail,
- * existsByNumeroLicencia y una consulta con filtros opcionales de
- * especialidad y activo, ordenada por apellido y nombre.
- */
+/** Acceso JPA a los doctores (P6). */
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
 
   boolean existsByEmail(String email);
 
   boolean existsByNumeroLicencia(String numeroLicencia);
 
-  /** Para completar el chequeo de duplicados sin chocar consigo mismo. */
   boolean existsByEmailAndIdNot(String email, Long id);
 
   boolean existsByNumeroLicenciaAndIdNot(String numeroLicencia, Long id);
 
-  /**
-   * Listado con filtros opcionales: especialidadId y activo.
-   * Ordenado por apellido y nombre, como pide el GET /api/v1/admin/doctores.
-   */
   @Query("""
       SELECT d FROM Doctor d
       WHERE (:especialidadId IS NULL OR d.especialidad.id = :especialidadId)
