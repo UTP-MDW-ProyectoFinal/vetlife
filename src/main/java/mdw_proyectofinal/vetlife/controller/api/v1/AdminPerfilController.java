@@ -58,14 +58,15 @@ public class AdminPerfilController {
             @Valid @RequestBody ActualizarAdminDTO dto,
             BindingResult result) {
 
-        if (result.hasErrors()) {
-            return ResponseEntity.badRequest().body(erroresPorCampo(result));
-        }
-
+        // Auth primero: sin credenciales validas no se procesa el cuerpo.
         Optional<Admin> admin = adminPerfilService.autenticar(email, password);
         if (admin.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Credenciales ausentes o incorrectas");
+        }
+
+        if (result.hasErrors()) {
+            return ResponseEntity.badRequest().body(erroresPorCampo(result));
         }
 
         if (dto.vacio()) {

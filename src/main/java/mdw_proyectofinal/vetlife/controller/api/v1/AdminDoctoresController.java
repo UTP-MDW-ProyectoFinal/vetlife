@@ -92,20 +92,22 @@ public class AdminDoctoresController {
             @Valid @RequestBody DoctorRegistroDTO dto,
             BindingResult result) {
 
-        if (result.hasErrors()) {
-            return ResponseEntity.badRequest().body(erroresPorCampo(result));
-        }
-
+        // Auth primero (401) y validacion de credenciales antes de exponer
+        // cualquier detalle del cuerpo de la peticion.
         Optional<Admin> admin = adminPerfilService.autenticar(email, password);
         if (admin.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                     .body("Credenciales ausentes o incorrectas");
         }
 
-        // Solo Adam (id 1) puede crear doctores.
+        // Solo Adam (id 1) puede crear doctores (403 antes de 400/404/409).
         if (admin.get().getId() != AdminPerfilService.ADAM_ID) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN)
                     .body("Solo el admin principal (id 1) puede registrar doctores");
+        }
+
+        if (result.hasErrors()) {
+            return ResponseEntity.badRequest().body(erroresPorCampo(result));
         }
 
         Optional<Especialidad> especialidad = doctorService.buscarEspecialidad(dto.getEspecialidadId());
