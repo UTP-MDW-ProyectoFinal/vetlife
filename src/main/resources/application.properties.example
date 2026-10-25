@@ -1,1 +1,19 @@
 spring.application.name=vetlife
+
+# Cada integrante ajusta esta plantilla con SU conexion local
+# (copia todo a application.properties y reemplaza los placeholders).
+spring.datasource.url=jdbc:mysql://localhost:3306/vetlife?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+spring.datasource.username=TU_USUARIO
+spring.datasource.password=TU_PASSWORD
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# Hibernate genera las tablas desde las entidades al arrancar
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+spring.jpa.open-in-view=false
+
+# Semillas idempotentes: corren en cada arranque
+spring.jpa.defer-datasource-initialization=true
+spring.sql.init.mode=always
+spring.sql.init.data-locations=classpath:db/data/*.sql
+spring.sql.init.encoding=UTF-8
