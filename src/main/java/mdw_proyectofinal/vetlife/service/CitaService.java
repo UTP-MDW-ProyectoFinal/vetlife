@@ -13,7 +13,7 @@ import mdw_proyectofinal.vetlife.repository.CitaRepository;
 import mdw_proyectofinal.vetlife.repository.MascotaRepository;
 import mdw_proyectofinal.vetlife.repository.ServicioRepository;
 
-@Service
+@Service("citaServiceWeb")
 public class CitaService {
 
     private final CitaRepository citaRepository;
