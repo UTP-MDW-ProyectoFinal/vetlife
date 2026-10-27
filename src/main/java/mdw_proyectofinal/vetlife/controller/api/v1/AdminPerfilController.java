@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import mdw_proyectofinal.vetlife.dto.ActualizarAdminDTO;
-import mdw_proyectofinal.vetlife.dto.PerfilAdminResponse;
 import mdw_proyectofinal.vetlife.model.Admin;
 import mdw_proyectofinal.vetlife.service.api.v1.AdminPerfilService;
 import mdw_proyectofinal.vetlife.utils.EncryptPassword;
