@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import mdw_proyectofinal.vetlife.model.Mascota;
 
-@Repository
+@Repository("mascotaRepositoryMemoria")
 public class MascotaRepository {
 
     private final List<Mascota> mascotas = new ArrayList<>();

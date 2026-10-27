@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import mdw_proyectofinal.vetlife.model.Cita;
 
-@Repository
+@Repository("citaRepositoryMemoria")
 public class CitaRepository {
 
     private final List<Cita> citas = new ArrayList<>();
