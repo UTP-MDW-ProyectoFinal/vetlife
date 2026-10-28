@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Repository
 public interface MascotaRepository extends JpaRepository<Mascota, Long> {
-    List<Mascota> findByUsuarioId(Long usuarioId);
-    Optional<Mascota> findByIdAndUsuarioId(Long id, Long usuarioId);
-    boolean existsByUsuarioIdAndNombreIgnoreCaseAndEspecieId(Long usuarioId, String nombre, Integer especieId);
+    List<Mascota> findByUsuarioId(Integer usuarioId);
+    Optional<Mascota> findByIdAndUsuarioId(Long id, Integer usuarioId);
+    boolean existsByUsuarioIdAndNombreIgnoreCaseAndEspecieId(Integer usuarioId, String nombre, Integer especieId);
 }

@@ -33,3 +33,6 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### OpenCode: snapshots del MCP de Playwright ###
+.playwright-mcp/

@@ -22,14 +22,14 @@ public class MascotaService {
     private final UsuarioRepository usuarioRepository;
 
     @Transactional(readOnly = true)
-    public List<MascotaResponse> listar(Long usuarioId, Integer especieId) {
+    public List<MascotaResponse> listar(Integer usuarioId, Integer especieId) {
         return mascotaRepository.findByUsuarioId(usuarioId).stream()
             .filter(m -> especieId == null || m.getEspecie().getId().equals(especieId))
             .map(this::mapToResponse)
             .collect(Collectors.toList());
     }
 
-    public MascotaResponse crear(Long usuarioId, CrearMascotaRequest req) {
+    public MascotaResponse crear(Integer usuarioId, CrearMascotaRequest req) {
         Especie especie = especieRepository.findById(req.especieId())
             .orElseThrow(() -> new RecursoNoEncontradoException("Especie no encontrada"));
 
@@ -53,13 +53,13 @@ public class MascotaService {
     }
 
     @Transactional(readOnly = true)
-    public MascotaResponse obtenerPorId(Long idMascota, Long usuarioId) {
+    public MascotaResponse obtenerPorId(Long idMascota, Integer usuarioId) {
         Mascota mascota = mascotaRepository.findByIdAndUsuarioId(idMascota, usuarioId)
             .orElseThrow(() -> new RecursoNoEncontradoException("Mascota no encontrada o no pertenece al usuario"));
         return mapToResponse(mascota);
     }
 
-    public MascotaResponse actualizar(Long idMascota, Long usuarioId, ActualizarMascotaRequest req) {
+    public MascotaResponse actualizar(Long idMascota, Integer usuarioId, ActualizarMascotaRequest req) {
         Mascota mascota = mascotaRepository.findByIdAndUsuarioId(idMascota, usuarioId)
             .orElseThrow(() -> new RecursoNoEncontradoException("Mascota no encontrada o no pertenece al usuario"));
 

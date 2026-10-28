@@ -359,7 +359,8 @@ class AdminDoctorConsultaApiTest {
         if (!existentes.isEmpty()) {
             return existentes.get(0);
         }
-        Especie nueva = new Especie(null, nombre);
+        Especie nueva = new Especie();
+        nueva.setNombre(nombre);
         em.persist(nueva);
         return nueva;
     }

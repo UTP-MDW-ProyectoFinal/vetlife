@@ -1,46 +1,107 @@
 package mdw_proyectofinal.vetlife.model;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import mdw_proyectofinal.vetlife.model.api.v1.Especie;
-import mdw_proyectofinal.vetlife.model.api.v1.Sexo;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-
-@Entity
-@Table(name = "mascota", uniqueConstraints = {
-    @UniqueConstraint(columnNames = {"usuario_id", "nombre", "especie_id"})
-})
-@Getter
-@Setter
 public class Mascota {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "especie_id", nullable = false)
-    private Especie especie;
-
-    @Column(nullable = false, length = 50)
+    private int id;
     private String nombre;
-
-    @Column(length = 50)
+    private String especie;
     private String raza;
+    private String edad;
+    private String sexo;
+    private int duenioId;
+    private boolean activa;
+    private int visitas;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 6)
-    private Sexo sexo;
+    public Mascota() {
+        this.activa = true;
+    }
 
-    @Column(name = "fecha_nacimiento", nullable = false)
-    private LocalDate fechaNacimiento;
+    public Mascota(int id, String nombre, String especie, String raza, String edad, String sexo, int duenioId) {
+        this.id = id;
+        this.nombre = nombre;
+        this.especie = especie;
+        this.raza = raza;
+        this.edad = edad;
+        this.sexo = sexo;
+        this.duenioId = duenioId;
+        this.activa = true;
+    }
 
-    @Column(name = "peso_kg", nullable = false, precision = 5, scale = 2)
-    private BigDecimal pesoKg;
+    public Mascota(int id, String nombre, String especie, String raza, String edad, String sexo, int duenioId,
+            int visitas) {
+        this(id, nombre, especie, raza, edad, sexo, duenioId);
+        this.visitas = visitas;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getEspecie() {
+        return especie;
+    }
+
+    public void setEspecie(String especie) {
+        this.especie = especie;
+    }
+
+    public String getRaza() {
+        return raza;
+    }
+
+    public void setRaza(String raza) {
+        this.raza = raza;
+    }
+
+    public String getEdad() {
+        return edad;
+    }
+
+    public void setEdad(String edad) {
+        this.edad = edad;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public int getDuenioId() {
+        return duenioId;
+    }
+
+    public void setDuenioId(int duenioId) {
+        this.duenioId = duenioId;
+    }
+
+    public boolean isActiva() {
+        return activa;
+    }
+
+    public void setActiva(boolean activa) {
+        this.activa = activa;
+    }
+
+    public int getVisitas() {
+        return visitas;
+    }
+
+    public void setVisitas(int visitas) {
+        this.visitas = visitas;
+    }
 }

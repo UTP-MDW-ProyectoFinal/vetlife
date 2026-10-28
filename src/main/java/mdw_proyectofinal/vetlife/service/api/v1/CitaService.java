@@ -67,7 +67,7 @@ public class CitaService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La solicitud es obligatoria");
         }
 
-        Mascota mascota = mascotaRepository.findByIdAndUsuarioId(request.getMascotaId(), usuarioId)
+        Mascota mascota = mascotaRepository.findByIdAndUsuarioId(request.getMascotaId(), usuarioId.intValue())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "La mascota no existe o no pertenece al usuario"));
 
         Doctor doctor = doctorRepository.findById(request.getDoctorId())
