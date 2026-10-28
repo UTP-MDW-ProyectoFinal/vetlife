@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import mdw_proyectofinal.vetlife.security.AuthInterceptor;
+
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
@@ -16,6 +18,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(authInterceptor)
-                .addPathPatterns("/admin/**", "/admin", "/perfil", "/mascota", "/reservas");
+                .addPathPatterns("/admin/**", "/admin", "/perfil", "/mascota", "/reservas", "/api/v1/**");
     }
 }
